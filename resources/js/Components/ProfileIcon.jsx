@@ -1,7 +1,7 @@
-export default function AlnumIcon(props) {
+export default function ProfileIcon(props) {
     return (
-        <svg {...props} width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g id="控件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <svg {...props} width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" opacity="0.5">
                 <g id="nav_my-playlist" fill="#FFFFFF">
                     <g>
                         <path d="M8.33333333,9.5 L12.3333333,9.5 C12.7935706,9.5 13.1666666,9.89175084 13.1666666,10.375 C13.1666666,10.8582492 12.7935706,11.25 12.3333333,11.25 L8.33333333,11.25 C7.87309604,11.25 7.5,10.8582492 7.5,10.375 C7.5,9.89175084 7.87309604,9.5 8.33333333,9.5 L8.33333333,9.5 Z M8.33333333,7 L12.3333333,7 C12.7935706,7 13.1666666,7.39175084 13.1666666,7.875 C13.1666666,8.35824916 12.7935706,8.75 12.3333333,8.75 L8.33333333,8.75 C7.87309604,8.75 7.5,8.35824916 7.5,7.875 C7.5,7.39175084 7.87309604,7 8.33333333,7 L8.33333333,7 Z M8.33333329,12 L12.3333333,12 C12.7935706,12 13.1666666,12.3917508 13.1666666,12.875 C13.1666666,13.3582492 12.7935706,13.75 12.3333333,13.75 L8.33333329,13.75 C7.87309602,13.75 7.5,13.3582491 7.5,12.875 C7.5,12.3917509 7.87309602,12 8.33333329,12 L8.33333329,12 Z" id="椭圆_19_拷贝"></path>

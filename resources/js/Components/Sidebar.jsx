@@ -1,36 +1,27 @@
 import { Link } from '@inertiajs/react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 // import { albums, artists, userProfile } from "../../config/app-urls";
-import AlbumIcon from '@/Components/AlbumIcon';
-import ProfileIcon from '@/Components/ProfileIcon';
-import ArtistIcon from '@/Components/ArtistIcon';
+import { SidebarItems } from '@/Components/SideBarItems';
 import LogoutIcon from '@/Components/LogoutIcon';
 
 const Sidebar = () => {
-    const sidebaritems = [
-        { name: "Albums", link: '/album', icon: AlbumIcon },
-        { name: "Artists", link: '/artist', icon: ArtistIcon },
-        { name: "Profile", link: '/profile', icon: ProfileIcon },
-    ];
     return (
-        <div className=" flex  h-full min-h-screen  flex-col justify-between bg-black p-8 text-[#b3b3b3]">
+        <div className="flex h-full min-h-screen flex-col justify-between bg-black p-8 text-[#b3b3b3]">
             <div>
                 <div className="">
                     <ApplicationLogo fill="white" className="w-24 h-24" />
                 </div>
 
                 <ul className="mt-6 py-8">
-                    {sidebaritems.map((item, i) => (
+                    {SidebarItems.map((item, i) => (
                         <li key={item.name} className="mb-6">
-                            <Link
-                                href={item.link}
+                            <Link href={item.link}
                                 className={({ isActive }) =>
                                     isActive ? "text-white" : "text-[#b3b3b3]"
                                 }
                             >
                                 <div className="flex items-center ">
                                     <item.icon className="mr-4 h-7 w-7" />
-                                    {/* <img src={item.icon} alt="icon" className="mr-4 h-7 w-7" /> */}
                                     <span className="text-lg">{item.name}</span>
                                 </div>
                             </Link>
