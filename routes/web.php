@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignUpController;
-
+use Illuminate\Auth\Events\Logout;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +27,8 @@ Route::resource('login', LoginController::class)->only(['index', 'store'])->name
     'index' => 'login',
     'store' => 'login'
 ])->middleware('guest');
-
+Route::post('logout', [LogoutController::class, 'destroy'])->name('logout');
+Route::resource('profile', ProfileController::class)->only(['index', 'store'])->names([
+    'index' => 'profile',
+    'store' => 'profile'
+])->middleware('auth');
