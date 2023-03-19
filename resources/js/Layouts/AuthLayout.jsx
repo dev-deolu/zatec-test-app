@@ -3,7 +3,7 @@ import Navbar from '@/Components/Navbar';
 import Sidebar from '@/Components/Sidebar';
 import { Link } from '@inertiajs/react';
 
-export default function AuthenticatedLayout({ auth, header, children }) {
+export default function AuthenticatedLayout({ auth,children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <div className="bg-dark text-[#b3b3b3] relative">

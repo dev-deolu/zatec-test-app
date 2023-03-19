@@ -5,6 +5,7 @@ import { Link } from '@inertiajs/react';
 // import CaretUp from "../../assets/icons/caret-up.svg";
 // import UserIcon from "../../assets/icons/user-icon.svg";
 import SearchIcon from '@/Components/SearchIcon';
+import ProfileIcon from '@/Components/ProfileIcon';
 
 const Navbar = ({user}) => {
     return (
@@ -18,7 +19,7 @@ const Navbar = ({user}) => {
             </div>
 
             <div className="flex items-center rounded-3xl bg-black/80 p-1">
-                <Link href='/profile'> <span className="mx-2  font-semibold text-white" >{user?.name ?? 'Rukayat'}</span></Link>
+                <Link href='/profile'> <span className="mx-2  font-semibold text-white" >{user?.name ??  <ProfileIcon /> }</span></Link>
             </div>
         </div>
     );

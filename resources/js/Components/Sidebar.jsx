@@ -8,15 +8,15 @@ import LogoutIcon from '@/Components/LogoutIcon';
 
 const Sidebar = () => {
     const sidebaritems = [
-        { name: "Albums", link: '/albums', icon: AlbumIcon },
-        { name: "Artists", link: '/artists', icon: ArtistIcon },
+        { name: "Albums", link: '/album', icon: AlbumIcon },
+        { name: "Artists", link: '/artist', icon: ArtistIcon },
         { name: "Profile", link: '/profile', icon: ProfileIcon },
     ];
     return (
         <div className=" flex  h-full min-h-screen  flex-col justify-between bg-black p-8 text-[#b3b3b3]">
             <div>
                 <div className="">
-                    <ApplicationLogo fill="white" />
+                    <ApplicationLogo fill="white" className="w-24 h-24" />
                 </div>
 
                 <ul className="mt-6 py-8">
