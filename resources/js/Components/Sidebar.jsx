@@ -2,13 +2,15 @@ import { Link } from '@inertiajs/react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 // import { albums, artists, userProfile } from "../../config/app-urls";
 import AlbumIcon from '@/Components/AlbumIcon';
+import ProfileIcon from '@/Components/ProfileIcon';
+import ArtistIcon from '@/Components/ArtistIcon';
 import LogoutIcon from '@/Components/LogoutIcon';
 
 const Sidebar = () => {
     const sidebaritems = [
         { name: "Albums", link: '/albums', icon: AlbumIcon },
-        { name: "Artists", link: '/artists', icon: AlbumIcon },
-        { name: "Profile", link: '/profile', icon: AlbumIcon },
+        { name: "Artists", link: '/artists', icon: ArtistIcon },
+        { name: "Profile", link: '/profile', icon: ProfileIcon },
     ];
     return (
         <div className=" flex  h-full min-h-screen  flex-col justify-between bg-black p-8 text-[#b3b3b3]">

@@ -3,7 +3,7 @@ import Navbar from '@/Components/Navbar';
 import Sidebar from '@/Components/Sidebar';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ auth, header, children }) {
+export default function AuthenticatedLayout({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <div className="bg-dark text-[#b3b3b3] relative">
@@ -12,7 +12,7 @@ export default function Authenticated({ auth, header, children }) {
         </div>
         <div className="flex flex-col justify-between ml-[16rem] min-h-screen">
           <div>
-            <Navbar />
+            <Navbar user={auth.user} />
             <div className="px-8">{children}</div>
           </div>
           {/* <Footer /> */}
