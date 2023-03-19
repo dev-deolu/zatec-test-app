@@ -20,8 +20,8 @@ export default function Welcome(props) {
 
                 <form>
                     <div className="mb-5">
-                        <label className="mb-3">Email address or username</label>
-                        <input className="input" placeholder="Email address or username" />
+                        <label className="mb-3">Email address </label>
+                        <input className="input" placeholder="Email address" />
                     </div>
 
                     <div className="mb-5">
