@@ -1,17 +1,17 @@
 import { Link, Head } from '@inertiajs/react';
 import GoogleIcon from '@/Components/GoogleIcon';
+import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function Welcome(props) {
     return (
-        <>
+        <GuestLayout>
             <Head title="Welcome" />
             <div className="my-5 mx-auto max-w-[480px]">
                 <h5 className="text-center text-lg font-semibold  lg:text-2xl">Login</h5>
 
                 <div className="my-4">
                     <button className="flex w-full items-center justify-center rounded-[40px] border-[3px] border-dark py-3 font-medium text-dark">
-                        <GoogleIcon  className="mr-3" />
-                        {/* <img src={GoogleIcon} alt="" className="mr-3" /> */}
+                        <GoogleIcon className="mr-3" />
                         <span className="">Continue with Google</span>
                     </button>
                 </div>
@@ -48,6 +48,6 @@ export default function Welcome(props) {
                     </div>
                 </form>
             </div>
-        </>
+        </GuestLayout>
     );
 }
