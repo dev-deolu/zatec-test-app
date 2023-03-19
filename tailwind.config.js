@@ -11,6 +11,19 @@ module.exports = {
 
     theme: {
         extend: {
+            colors: {
+                black: "#000000",
+                dark: "#121212",
+                textGrey: "#D6D6D6",
+                text: "rgba(5, 0, 56, 0.7)",
+                theme: "#185BA6",
+            },
+            borderColor: {
+                grey: "#D6D6D6",
+            },
+            boxShadow: {
+                custom1: "0px 3px 20px rgba(0, 0, 0, 0.16)"
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
