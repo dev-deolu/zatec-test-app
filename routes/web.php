@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\SignUpController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,13 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-});
+Route::get('/', [LoginController::class, 'index'])->name('welcome')->middleware('guest');
+Route::resource('signup', SignUpController::class)->only(['index', 'store'])->names([
+    'index' => 'signup',
+    'store' => 'signup'
+])->middleware('guest');
+Route::resource('login', LoginController::class)->only(['index', 'store'])->names([
+    'index' => 'login',
+    'store' => 'login'
+])->middleware('guest');
 
