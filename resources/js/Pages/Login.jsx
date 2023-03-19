@@ -35,10 +35,10 @@ export default function Login(props) {
                 <h5 className="text-center text-lg font-semibold  lg:text-2xl">Login</h5>
 
                 <div className="my-4">
-                    <button className="flex w-full items-center justify-center rounded-[40px] border-[3px] border-dark py-3 font-medium text-dark">
+                    <a className="flex w-full items-center justify-center rounded-[40px] border-[3px] border-dark py-3 font-medium text-dark" href={route('google.login')} method="get" as="button">
                         <GoogleIcon className="mr-3" />
                         <span className="">Continue with Google</span>
-                    </button>
+                    </a>
                 </div>
 
                 <h4 className="my-6 text-center font-semibold ">Or</h4>

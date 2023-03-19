@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProfileController;
@@ -28,7 +29,11 @@ Route::resource('login', LoginController::class)->only(['index', 'store'])->name
     'index' => 'login',
     'store' => 'login'
 ])->middleware('guest');
-Route::post('logout', [LogoutController::class, 'destroy'])->name('logout');
+
+Route::get('/google/login', [GoogleLoginController::class, 'index'])->name('google.login')->middleware('guest');
+Route::get('/google/redirect', [GoogleLoginController::class, 'store'])->name('google.redirect')->middleware('guest');
+
+Route::post('logout', [LogoutController::class, 'destroy'])->name('logout')->middleware('auth');
 Route::resource('profile', ProfileController::class)->only(['index', 'store'])->names([
     'index' => 'profile',
     'store' => 'profile'

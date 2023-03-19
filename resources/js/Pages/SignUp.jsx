@@ -37,10 +37,10 @@ export default function SignUp(props) {
                 </h5>
 
                 <div className="my-4">
-                    <button className="flex items-center justify-center w-full py-3 border-[3px] border-dark rounded-[40px] text-dark">
+                    <a className="flex items-center justify-center w-full py-3 border-[3px] border-dark rounded-[40px] text-dark" href={route('google.login')} method="get" as="button">
                         <GoogleIcon className="mr-3" />
                         <span className="">Sign Up with Google</span>
-                    </button>
+                    </a>
                 </div>
 
                 <h4 className="text-center font-semibold  my-6">Or</h4>
