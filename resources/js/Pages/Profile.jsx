@@ -4,13 +4,14 @@ import AlbumCard from '@/Components/AlbumCard';
 import ArtistCard from '@/Components/ArtistCard';
 
 export default function Profile(props) {
+    console.log(props,'props');
     const AlbumCover1 = '';
     const AlbumCover2 = '';
     const Artist1 = '';
 
     const albumsdata = [
         {
-            coverUrl: AlbumCover1,
+            coverUrl: 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png',
             title: "Dangerous Love",
             releaseDate: "2016",
             artistName: "BLACK PINK",
@@ -47,8 +48,8 @@ export default function Profile(props) {
     const artistdata = [
         {
             id: "scgc",
-            imageUrl: Artist1,
-            name: "J.Cole",
+            imageUrl: 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png',
+            name: "Davido",
             topTracks: [
                 { title: "Happiness", duration: "2:10" },
                 { title: "Happiness", duration: "2:10" },
@@ -151,7 +152,7 @@ export default function Profile(props) {
                         <div>
                             <h6>Profile</h6>
                             <h3 className="text-xl font-extrabold md:text-2xl xl:text-6xl">
-                                Ruqayat
+                                {props.auth.user.name}
                             </h3>
                         </div>
                     </div>

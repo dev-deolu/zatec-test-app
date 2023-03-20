@@ -5,6 +5,7 @@ export default function Artist(props) {
     return (
         <AuthenticatedLayout
             auth={props.auth}
+            search='artist'
             errors={props.errors}
         >
             <Head title="Artist" />

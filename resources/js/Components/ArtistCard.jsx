@@ -6,7 +6,7 @@ export default function ArtistCard(artistData) {
         <>
             <Link href={`/artist/${id}`}>
                 <div className="rounded-xl bg-transparent/40 p-5 hover:bg-[#1C1C19]">
-                    <div className="rounded-full">
+                    <div className="rounded-full p-4">
                         <img src={imageUrl} alt="artist" className="w-full rounded-full" />
                     </div>
                     <div className="my-4 text-sm">

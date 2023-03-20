@@ -8,9 +8,10 @@ import ProfileIcon from '@/Components/ProfileIcon';
 import useOutsideClick from "@/Hooks/useOutsideClick";
 import TextInput from "./TextInput";
 
-const Navbar = ({ user }) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
+const Navbar = ({ user, search }) => {
+    const { data, setData, get, processing, errors, reset } = useForm({
         search: '',
+        type: search
     });
     const [isExpanded, setIsExpanded] = useState(false);
     const toggleSidebar = () => { setIsExpanded(!isExpanded); };
@@ -18,14 +19,26 @@ const Navbar = ({ user }) => {
     const ref = useOutsideClick(closeSidebar);
     const handleOnChange = (event) => {
         setData(event.target.name, event.target.value);
-        // make api call for search here
+    };
+    const submit = (e) => {
+        e.preventDefault();
+        if (data.search.length > 2) {
+            get(route('search'));
+        }
     };
     return (
-        <div ref={ref} className="flex w-full items-center justify-between bg-transparent py-6 px-6">
-            <div className="relative">
-                <TextInput id="search" type="text" name="search" value={data.search} onChange={handleOnChange} placeholder="Search" />
-                <SearchIcon className="svg-icon search-icon w-4 h-4 absolute top-1/3 right-3" />
-            </div>
+        <div ref={ref} className={`flex w-full items-center ${search? "justify-between" :"justify-end"}  bg-transparent py-6 px-6`}>
+
+            {search ? (
+                <div className=" rounded-3xl bg-white py-2 px-4 text-dark lg:w-[24rem] xl:w-[28rem]">
+                    <form onSubmit={submit} className='flex items-center'>
+                        <input placeholder="Search" className="mr-1 w-full placeholder:text-sm focus:outline-none" name="search" value={data.search} onChange={handleOnChange} />
+                        <button className="shadow-custom1 hover:scale-110 rounded-full p-2" >
+                            <SearchIcon className="svg-icon search-icon w-4 h-4" />
+                        </button>
+                    </form>
+                </div>
+            ) : null}
 
             <div className="flex items-center rounded-3xl bg-black/80 p-1">
                 <Link href='/profile'> <span className="mx-2  font-semibold text-white" >{user?.name ?? <ProfileIcon />}</span></Link>

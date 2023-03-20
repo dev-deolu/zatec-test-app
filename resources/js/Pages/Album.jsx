@@ -5,6 +5,7 @@ export default function Album(props) {
     return (
         <AuthenticatedLayout
             auth={props.auth}
+            search='album'
             errors={props.errors}
         >
             <Head title="Artist" />
