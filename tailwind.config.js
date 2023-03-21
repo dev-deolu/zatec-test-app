@@ -22,7 +22,8 @@ module.exports = {
                 grey: "#D6D6D6",
             },
             boxShadow: {
-                custom1: "0px 3px 20px rgba(0, 0, 0, 0.16)"
+                custom1: "0px 3px 20px rgba(0, 0, 0, 0.16)",
+                custom2:"1px 2px 10px 1px rgba(255,255,255,0.3)"
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

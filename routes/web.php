@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\GoogleLoginController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GoogleLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,15 +34,19 @@ Route::get('/google/login', [GoogleLoginController::class, 'index'])->name('goog
 Route::get('/google/redirect', [GoogleLoginController::class, 'store'])->name('google.redirect')->middleware('guest');
 
 Route::post('logout', [LogoutController::class, 'destroy'])->name('logout')->middleware('auth');
+
 Route::resource('profile', ProfileController::class)->only(['index', 'store'])->names([
     'index' => 'profile',
     'store' => 'profile'
 ])->middleware('auth');
-Route::resource('album', AlbumController::class)->only(['index', 'store'])->names([
+Route::resource('album', AlbumController::class)->only(['index','show', 'store','destroy'])->names([
     'index' => 'album',
-    'store' => 'album'
+    'show' => 'album.show',
+    'store' => 'album.store',
+    'destroy' => 'album.destroy'
 ])->middleware('auth');
-Route::resource('artist', ArtistController::class)->only(['index', 'store'])->names([
+Route::resource('artist', ArtistController::class)->only(['index', 'show', 'store'])->names([
     'index' => 'artist',
+    'show' => 'artist.show',
     'store' => 'artist'
 ])->middleware('auth');

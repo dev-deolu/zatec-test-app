@@ -15,11 +15,7 @@ const Sidebar = () => {
                 <ul className="mt-6 py-8">
                     {SidebarItems.map((item, i) => (
                         <li key={item.name} className="mb-6">
-                            <Link href={item.link}
-                                className={({ isActive }) =>
-                                    isActive ? "text-white" : "text-[#b3b3b3]"
-                                }
-                            >
+                            <Link href={item.link} >
                                 <div className="flex items-center ">
                                     <item.icon className="mr-4 h-7 w-7" />
                                     <span className="text-lg">{item.name}</span>

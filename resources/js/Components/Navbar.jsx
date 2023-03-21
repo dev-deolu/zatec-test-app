@@ -6,12 +6,12 @@ import MobileNavIcon from '@/Components/MobileNavIcon';
 import SearchIcon from '@/Components/SearchIcon';
 import ProfileIcon from '@/Components/ProfileIcon';
 import useOutsideClick from "@/Hooks/useOutsideClick";
-import TextInput from "./TextInput";
+import InputError from "./InputError";
+
 
 const Navbar = ({ user, search }) => {
     const { data, setData, get, processing, errors, reset } = useForm({
         search: '',
-        type: search
     });
     const [isExpanded, setIsExpanded] = useState(false);
     const toggleSidebar = () => { setIsExpanded(!isExpanded); };
@@ -23,20 +23,21 @@ const Navbar = ({ user, search }) => {
     const submit = (e) => {
         e.preventDefault();
         if (data.search.length > 2) {
-            get(route('search'));
+            get(route(search));
         }
     };
     return (
         <div ref={ref} className={`flex w-full items-center ${search? "justify-between" :"justify-end"}  bg-transparent py-6 px-6`}>
 
             {search ? (
-                <div className=" rounded-3xl bg-white py-2 px-4 text-dark lg:w-[24rem] xl:w-[28rem]">
+                <div className="rounded-3xl bg-white py-2 px-4 text-dark lg:w-[24rem] xl:w-[28rem]">
                     <form onSubmit={submit} className='flex items-center'>
-                        <input placeholder="Search" className="mr-1 w-full placeholder:text-sm focus:outline-none" name="search" value={data.search} onChange={handleOnChange} />
+                        <input disabled={processing} placeholder="Search" className="mr-1 w-full placeholder:text-sm focus:outline-none" name="search" value={data.search} onChange={handleOnChange} />
                         <button className="shadow-custom1 hover:scale-110 rounded-full p-2" >
                             <SearchIcon className="svg-icon search-icon w-4 h-4" />
                         </button>
                     </form>
+                    <InputError message={errors.type} className="mt-2" />
                 </div>
             ) : null}
 
