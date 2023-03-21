@@ -7,6 +7,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -46,7 +47,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['albums'];
+    protected $with = ['albums', 'artists'];
 
     /**
      * Get the albums for the user.

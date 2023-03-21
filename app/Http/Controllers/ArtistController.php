@@ -28,14 +28,18 @@ class ArtistController extends Controller
     public function index(Request $request)
     {
         $artist = null;
-        $request->whenFilled('search', function ($search) use (&$artist) {
+        $favorites = $request->user()->artists->transform(function ($artist) {
+            return $artist->artist;
+        })->toArray();
+
+        $request->whenFilled('search', function ($search) use (&$artist, $favorites) {
             $artist =  $this->api->artist()->search($search);
-        }, function () use (&$artist) {
-            $artist = $this->api->artist()->search(fake()->realText(10), 15);
+        }, function () use (&$artist, $favorites) {
+            $artist = $favorites ?: $this->api->artist()->search(fake()->realText(10), 15);
         });
         return Inertia::render('Artist', [
             'artists' => $artist,
-            'favorites' => $request->user()->artists ?? []
+            'favorites' => $favorites ?? []
         ]);
     }
 
