@@ -55,4 +55,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
+
+    /**
+     * Get the artists for the user.
+     */
+    public function artists(): HasMany
+    {
+        return $this->hasMany(Artist::class);
+    }
 }

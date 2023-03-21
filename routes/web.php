@@ -45,8 +45,9 @@ Route::resource('album', AlbumController::class)->only(['index','show', 'store',
     'store' => 'album.store',
     'destroy' => 'album.destroy'
 ])->middleware('auth');
-Route::resource('artist', ArtistController::class)->only(['index', 'show', 'store'])->names([
+Route::resource('artist', ArtistController::class)->only(['index', 'show', 'store','destroy'])->names([
     'index' => 'artist',
     'show' => 'artist.show',
-    'store' => 'artist'
+    'store' => 'artist.store',
+    'destroy' => 'artist.destroy'
 ])->middleware('auth');
