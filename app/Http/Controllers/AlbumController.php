@@ -31,14 +31,18 @@ class AlbumController extends Controller
     public function index(Request $request): Response
     {
         $album = null;
-        $request->whenFilled('search', function ($search) use (&$album) {
+        $favourites = $request->user()->albums->transform(function ($album) {
+            return $album->album;
+        })->toArray();
+
+        $request->whenFilled('search', function ($search) use (&$album, $favourites) {
             $album =  $this->api->album()->search($search);
-        }, function () use (&$album) {
-            $album = $this->api->album()->search(fake()->realText(10), 15);
+        }, function () use (&$album, $favourites) {
+            $album = $favourites ?: $this->api->album()->search(fake()->realText(10), 15);
         });
         return Inertia::render('Album', [
             'albums' => $album,
-            'favorites' => $request->user()->albums ?? []
+            'favorites' => $favourites ?? []
         ]);
     }
 
