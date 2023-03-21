@@ -6,11 +6,10 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use App\Services\LastFmService;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\AddFavouriteAlbumRequest;
 use App\Interfaces\AlbumRepositoryInterface;
+use App\Http\Requests\AddFavouriteAlbumRequest;
 
 class AlbumController extends Controller
 {

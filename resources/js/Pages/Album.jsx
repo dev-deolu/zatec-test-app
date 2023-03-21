@@ -5,7 +5,6 @@ import { Head } from '@inertiajs/react';
 export default function Album(props) {
     const albums = props?.albums;
     const favorites = props.favorites ?? [];
-    console.log(albums, favorites);
     const isFavorite = (album, artist) => {
         return favorites.some((favorite) => favorite.name.toLowerCase() == album.toLowerCase() && favorite.artist.toLowerCase() == artist.toLowerCase());
     }

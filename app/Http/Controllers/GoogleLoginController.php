@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
@@ -49,7 +49,9 @@ class GoogleLoginController extends Controller
         }
     }
 
-
+    /**
+     * Authenticated
+     */
     protected function authenticated(Request $request)
     {
         $request->session()->regenerate();
