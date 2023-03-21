@@ -6,7 +6,7 @@ export default function Artist(props) {
     const artists = props?.artists;
     const favorites = props.favorites ?? [];
     const isFavorite = (artist) => {
-        return favorites.some((favorite) => favorite.artist.name.toLowerCase() == artist.toLowerCase());
+        return favorites.some((favorite) => favorite.name.toLowerCase() == artist.toLowerCase());
     }
     return (
         <AuthenticatedLayout

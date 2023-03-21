@@ -3,7 +3,7 @@ import ThreeDotIcon from './ThreeDotIcon';
 import Dropdown from './DropDown';
 
 export default function ArtistCard(artistData) {
-    const { imageUrl = "", name = "", id } = artistData;
+    const { imageUrl = "", name = "", id, favorite } = artistData;
     return (
         <>
             <div className="relative rounded-xl bg-transparent/40 p-5 hover:bg-[#1C1C19]">
@@ -22,7 +22,19 @@ export default function ArtistCard(artistData) {
                     <div className="">
                         <Dropdown icon={<ThreeDotIcon className="w-5" />}>
                             <ul className="p-2">
-                                <li className=" whitespace-nowrap">Add to Favourites</li>
+                            {favorite ? <Link
+                                    href={route('artist.destroy', { "id": id })}
+                                    method="delete"
+                                    as="button"
+                                    className=" whitespace-nowrap" >
+                                    Remove Favourites
+                                </Link> : <Link
+                                    href={route('artist.store', { "id": id })}
+                                    method="post"
+                                    as="button"
+                                    className=" whitespace-nowrap" >
+                                    Add to Favourites
+                                </Link>}
                             </ul>
                         </Dropdown>
                     </div>
