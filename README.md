@@ -11,7 +11,7 @@ The following tools are required in order to start the installation.
 > Please make sure `PORT 3306` is available else set `FORWARD_DB_PORT` in your env
 
 ## Installation
-1. Clone this repository with `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git ./coding-test-zatec`
+1. Clone this repository with `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git ./zatec-test-app`
 2. In your terminal `cd ./coding-test-zatec`
 3. Run `nano .env` to add values **required ENV credentials** OR Use your code editor to set **required ENV credentials** in .env file
 4. Run `composer setup` to setup the application and move into docker container
