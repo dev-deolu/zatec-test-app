@@ -23,7 +23,7 @@ class AlbumTest extends TestCase
             ->assertInertia(
                 fn (Assert $page) => $page
                     ->component('Album')
-            );;
+            );
 
         $response->assertOk();
     }

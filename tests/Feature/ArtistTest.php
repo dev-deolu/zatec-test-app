@@ -23,7 +23,7 @@ class ArtistTest extends TestCase
             ->assertInertia(
                 fn (Assert $page) => $page
                     ->component('Artist')
-            );;
+            );
 
         $response->assertOk();
     }

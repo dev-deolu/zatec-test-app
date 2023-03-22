@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\WithFaker;
+use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
@@ -31,6 +32,17 @@ class LoginTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
+    }
+
+    public function test_users_can_authenticate_using_google(): void
+    {
+        $user = $this->create_user('test1@example.com');
+        $this->get('/login')->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Login')
+        );
+        $response = $this->get('/google/login');
+        $response->assertFound();
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
