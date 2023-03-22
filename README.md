@@ -11,13 +11,13 @@ The following tools are required in order to start the installation.
 > Please make sure `PORT 3306` is available else set `FORWARD_DB_PORT` in your env
 
 ## Installation
-1. Clone this repository with [GIT REPO] `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git ./coding-test-zatec`
+1. Clone this repository with `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git ./coding-test-zatec`
 2. In your terminal `cd ./coding-test-zatec`
 3. Run `composer setup` to setup the application and move into docker container
 4. Run `composer build` to build the application
-> Note that your database setup needs to be configured in your .env file
+> Note that your required env credentials needs to be set for full functionality.
 
-## Required env credentials to be set
+## Required ENV Credentials
 
 Command | How to
 --- | ---
@@ -34,5 +34,5 @@ Please setup your credentials on lastfm
 You can visit [LastFm](https://www.last.fm/api).
 
 ## Test Application
-You can visit [APP URL](http://localhost:${APP_PORT}).
+You can visit [APP URL](http://localhost:7060).
 
