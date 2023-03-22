@@ -4,37 +4,35 @@
 The following tools are required in order to start the installation.
 
 - PHP >=8.1
+- [Docker](https://www.docker.com/)
 - [Composer](https://getcomposer.org/download/)
-- [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+> Please make sure you have docker running, you can verify using docker ps
+> Please make sure PORT 3306 is available else set FORWARD_DB_PORT in your env
 
 ## Installation
-
+1. Clone this repository with `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git ./coding-test-zatec`
+2. In your terminal `cd ./coding-test-zatec`
+3. Run `composer setup` to setup the application
 > Note that your database setup needs to be configured in your .env file
-> Note to test the scheduler set, kindly create new terminal, navigate to this application root, then run php artisan schedule:work
 
-1. Clone this repository with `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git`
-2. Run `composer install` to install the PHP dependencies
-3. Set up a local database called `laravel`
-4. Run `composer setup` to setup the application
-7. Configure the (optional) features from below
+## Required env credentials to be set
 
-
-## Commands
-
-Command | Description
+Command | How to
 --- | ---
-**`php artisan test `** | Run the tests
 
+**`GOOGLE_CLIENT_ID `** | Check **Google Login Setup**
+**`GOOGLE_CLIENT_SECRET `** | Check **Google Login Setup**
+
+**`LAST_FM_KEY `** | Check **LastFM Setup**
+**`LAST_FM_SECRET `** | Check **LastFM Setup**
 
 ## Google Login Setup
 Please setup your credentials on goolge and include your test email
-You can now visit the app in your browser by visiting [https://medium.com/employbl/add-login-with-google-to-your-laravel-app-d2205f01b895](Login With Google).
+You can visit [https://medium.com/employbl/add-login-with-google-to-your-laravel-app-d2205f01b895](Login With Google).
 
-## Security Vulnerabilities
+## LastFM Setup
+Please setup your credentials on lastfm 
+You can visit [https://www.last.fm/api](LastFm).
 
-Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
-
-## License
-
-The MIT License. Please see [the license file](LICENSE.md) for more information.
 
