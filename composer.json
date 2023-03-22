@@ -54,7 +54,7 @@
             "cp .env.example .env",
             "composer install",
             "./vendor/bin/sail up -d",
-            "docker exec -it coding-test-zatec-laravel.test-1 bash"
+            "docker exec -it zatec-test-app-laravel.test-1 bash"
         ],
         "build": [
             "npm install",
