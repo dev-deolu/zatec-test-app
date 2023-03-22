@@ -34,8 +34,8 @@ class GoogleLoginController extends Controller
                 return $this->authenticated($request);
             }
             Auth::login($user = User::create([
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
+                'name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
                 'password' => Hash::make($googleUser->id),
             ]));
             event(new Registered($user));
