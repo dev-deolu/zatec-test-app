@@ -15,7 +15,7 @@ class GoogleIntegrationTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_google_redirect(): void
     {
         $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');
 
