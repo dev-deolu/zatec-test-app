@@ -8,6 +8,7 @@ The following tools are required in order to start the installation.
 - [Composer](https://getcomposer.org/download/)
 
 > Please make sure you have docker running, you can verify using docker ps
+
 > Please make sure PORT 3306 is available else set FORWARD_DB_PORT in your env
 
 ## Installation
@@ -20,10 +21,8 @@ The following tools are required in order to start the installation.
 
 Command | How to
 --- | ---
-
 **`GOOGLE_CLIENT_ID `** | Check **Google Login Setup**
 **`GOOGLE_CLIENT_SECRET `** | Check **Google Login Setup**
-
 **`LAST_FM_KEY `** | Check **LastFM Setup**
 **`LAST_FM_SECRET `** | Check **LastFM Setup**
 
