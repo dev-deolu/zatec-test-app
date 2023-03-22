@@ -14,6 +14,7 @@ The following tools are required in order to start the installation.
 1. Clone this repository with `git clone https://dev-deolu@bitbucket.org/dev-deolu/zatec-test-app.git ./coding-test-zatec`
 2. In your terminal `cd ./coding-test-zatec`
 3. Run `composer setup` to setup the application and move into docker container
+3b. Run `nano .env` to add values **required ENV credentials**
 4. Run `composer build` to build the application
 > Note that your required env credentials needs to be set for full functionality.
 
