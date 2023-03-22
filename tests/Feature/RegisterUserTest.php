@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -36,7 +37,7 @@ class RegisterUserTest extends TestCase
      */
     public function test_user_cannot_visit_a_register_form_when_authenticated()
     {
-        $user = \App\Models\User::create([
+        $user = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
