@@ -1,13 +1,15 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature;
 
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AuthenticationTest extends TestCase
+class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,7 +22,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = $this->create_user('test1@example.com');
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -33,7 +35,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
-        $user = User::factory()->create();
+        $user = $this->create_user('test@example.com');
 
         $this->post('/login', [
             'email' => $user->email,
@@ -41,5 +43,15 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertGuest();
+    }
+
+    private function create_user(string $email)
+    {
+        return User::create([
+            'name' => 'Test User',
+            'email' => $email,
+            'password' => Hash::make('password'),
+            'password_confirmation' => 'password',
+        ]);
     }
 }
