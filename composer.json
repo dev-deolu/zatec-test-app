@@ -53,11 +53,12 @@
         "setup": [
             "cp .env.example .env",
             "composer install",
-            "php artisan key:generate --force",
+            "./vendor/bin/sail up -d",
+            "docker exec -it coding-test-zatec-laravel.test-1 bash",
             "npm install",
             "npm run build",
-            "./vendor/bin/sail up -d",
-            "./vendor/bin/sail artisan migrate --force"
+            "php artisan migrate --force",
+            "php artisan key:generate --force"
         ]
     },
     "extra": {
