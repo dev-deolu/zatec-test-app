@@ -29,9 +29,9 @@ Command | How to
 ## Google Login Setup
 Please setup your credentials on goolge and include your test email
 You can visit [https://medium.com/employbl/add-login-with-google-to-your-laravel-app-d2205f01b895](Login With Google).
-
 ## LastFM Setup
 Please setup your credentials on lastfm 
 You can visit [https://www.last.fm/api](LastFm).
 
-
+## Test Application
+You can visit ["http://localhost:${APP_PORT}"](${APP_NAME}).
