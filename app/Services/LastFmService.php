@@ -14,7 +14,10 @@ class LastFmService
     {
     }
 
-    public function buildRequestWithApiKey(): PendingRequest
+    /**
+     * Build request base url
+     */
+    public function buildBaseUrl(): PendingRequest
     {
         return Http::baseUrl(url: $this->baseUrl);
     }
@@ -23,12 +26,12 @@ class LastFmService
      * Issue a GET request to the given URL.
      *
      * @param  string  $url
-     * @param  array|string|null  $query
+     * @param  array $query
      * @return \Illuminate\Http\Client\Response
      */
-    public function get(PendingRequest $request, string $url, $query = null): Response
+    public function get(string $url =  "/2.0/", array $query = []): Response
     {
-        return $request->get(
+        return $this->buildBaseUrl()->get(
             url: $url,
             query: $query
         );
@@ -41,11 +44,11 @@ class LastFmService
      * @param  array  $data
      * @return \Illuminate\Http\Client\Response
      */
-    public function post(PendingRequest $request, string $url, array $payload = []): Response
+    public function post(string $url, array $payload = []): Response
     {
-        return $request->post(
+        return $this->buildBaseUrl()->post(
             url: $url,
-            data: $payload,
+            data:  $payload
         );
     }
 

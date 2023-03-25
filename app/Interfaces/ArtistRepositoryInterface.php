@@ -1,22 +1,23 @@
 <?php
+
 namespace App\Interfaces;
 
 use App\Models\Artist;
 
 interface ArtistRepositoryInterface
 {
-     /**
+    /**
      * Create a favorite artist record
      */
-    public function createArtist(int $user_id, array $artist): ?Artist;
+    public function addFavoriteArtist(int $user_id, array $artist): ?Artist;
 
     /**
-     * Delete a favorite artist record
+     * Remove from favorite artist record
      */
-    public function destroyArtist(int $user_id,  string $artist): bool;
+    public function removeFavoriteArtist(int $user_id,  string $artist): bool;
 
     /**
-     * Find by Artist
+     * Find favorite Artist by Artist
      */
-    public function findArtist(int $user_id, string $artist): ?Artist;
+    public function findFavoriteArtist(int $user_id, string $artist): ?Artist;
 }

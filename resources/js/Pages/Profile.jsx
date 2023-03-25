@@ -4,8 +4,8 @@ import AlbumCard from '@/Components/AlbumCard';
 import ArtistCard from '@/Components/ArtistCard';
 
 export default function Profile(props) {
-    const albums = props?.user.albums;
-    const artists = props?.user.artists;
+    const albums = props?.albums;
+    const artists = props?.artists;
     const isFavoriteAlbum = (album, artist) => {
         return albums.some(({ album: favorite }) => favorite.name.toLowerCase() == album.toLowerCase() && favorite.artist.toLowerCase() == artist.toLowerCase());
     }

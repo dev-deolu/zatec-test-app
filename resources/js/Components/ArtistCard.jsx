@@ -23,13 +23,13 @@ export default function ArtistCard(artistData) {
                         <Dropdown icon={<ThreeDotIcon className="w-5" />}>
                             <ul className="p-2">
                             {favorite ? <Link
-                                    href={route('artist.destroy', { "id": id })}
+                                    href={route('artist.destroy', { "artist": id })}
                                     method="delete"
                                     as="button"
                                     className=" whitespace-nowrap" >
                                     Remove Favourites
                                 </Link> : <Link
-                                    href={route('artist.store', { "id": id })}
+                                    href={route('artist.store', { "artist": id })}
                                     method="post"
                                     as="button"
                                     className=" whitespace-nowrap" >

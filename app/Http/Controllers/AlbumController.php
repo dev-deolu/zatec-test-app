@@ -4,23 +4,24 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Traits\AlbumTrait;
 use Illuminate\Http\Request;
-use App\Services\LastFmService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use App\Interfaces\AlbumRepositoryInterface;
+use App\Interfaces\AlbumServiceInterface;
 use App\Http\Requests\AddFavouriteAlbumRequest;
 
 class AlbumController extends Controller
 {
+    use AlbumTrait;
 
     /**
      * Create a new album controller instance.
      *
-     * @param  AlbumRepositoryInterface $albumRepository
+     * @param  AlbumServiceInterface $artistService
      * @return void
      */
-    public function __construct(private AlbumRepositoryInterface $albumRepository, private LastFmService $api)
+    public function __construct(private AlbumServiceInterface $albumService)
     {
     }
 
@@ -29,19 +30,10 @@ class AlbumController extends Controller
      */
     public function index(Request $request): Response
     {
-        $album = null;
-        $favourites = $request->user()->albums->transform(function ($album) {
-            return $album->album;
-        })->toArray();
-
-        $request->whenFilled('search', function ($search) use (&$album, $favourites) {
-            $album =  $this->api->album()->search($search);
-        }, function () use (&$album, $favourites) {
-            $album = $favourites ?: $this->api->album()->search(fake()->realText(10), 15);
-        });
+        [$albums, $favorites] = $this->albumService->getAlbumAndFavoriteWithSearch($request->user(), $request->input('search', null));
         return Inertia::render('Album', [
-            'albums' => $album,
-            'favorites' => $favourites ?? []
+            'albums' => $albums,
+            'favorites' => $favorites ?? []
         ]);
     }
 
@@ -50,10 +42,11 @@ class AlbumController extends Controller
      */
     public function show(string $id): Response
     {
-        $albumInfo = explode('|', $id);
+        [$album, $artist] = $this->getAlbumAndArtistFromId($id);
+        $user =  request()->user();
         return Inertia::render('AlbumDetails', [
-            'album' => $this->findAlbum($albumInfo[0], $albumInfo[1]),
-            'favorites' => request()->user()->albums ?? []
+            'album' => $this->albumService->getAlbum($user, $album, $artist),
+            'favorites' => $this->albumService->getFavoriteAlbums($user)
         ]);
     }
 
@@ -63,14 +56,7 @@ class AlbumController extends Controller
     public function store(AddFavouriteAlbumRequest $request): RedirectResponse
     {
         // check the db
-        $album = $this->albumRepository->findByAlbumArtist(auth()->id(), $request->album, $request->artist);
-        if ($album) {
-            return Redirect::back();
-        }
-        // api call to get album
-        if ($getAlbum = $this->api->album()->info($request->album, $request->artist))
-            // store record of album to add to favorite
-            $this->albumRepository->createAlbum($request->user()->id, $getAlbum);
+        $album = $this->albumService->addFavoriteAlbum($request->user(), $request->album, $request->artist);
         return Redirect::back();
     }
 
@@ -79,22 +65,8 @@ class AlbumController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        $albumInfo = explode('|', $id);
-        $this->albumRepository->destroyAlbum(auth()->user()->id, $albumInfo[0], $albumInfo[1]);
+        [$album, $artist] = $this->getAlbumAndArtistFromId($id);
+        $this->albumService->removeFavoriteAlbum(auth()->user(), $album, $artist);
         return Redirect::back();
-    }
-
-    /**
-     * Find album either in db or api call
-     */
-    protected function findAlbum(string $albumName, string $albumArtist): ?array
-    {
-        // check the db
-        $album = $this->albumRepository->findByAlbumArtist(auth()->id(), $albumName, $albumArtist);
-        if ($album) {
-            return $album->album;
-        }
-        // api check
-        return $this->api->album()->info($albumName, $albumArtist);
     }
 }

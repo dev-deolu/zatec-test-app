@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use App\Interfaces\AuthServiceInterface;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
@@ -23,38 +20,14 @@ class GoogleLoginController extends Controller
     /**
      * Redirect from google
      */
-    public function store(Request $request)
+    public function store(Request $request, AuthServiceInterface $authServiceInterface)
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
-            // find user by email (email is unique to db)
-            $user = User::where('email', $googleUser->email)->first();
-            if ($user) {
-                Auth::login($user);
-                return $this->authenticated($request);
-            }
-            Auth::login($user = User::create([
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'password' => Hash::make($googleUser->id),
-            ]));
-            event(new Registered($user));
-            return $this->authenticated($request);
+            $authServiceInterface->loginUsingGoogle(Socialite::driver('google')->user());
+            return redirect()->intended(RouteServiceProvider::HOME);
         } catch (\Exception $e) {
-            logger('google_oauth', ['message' => $e->getMessage()]);
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+            $authServiceInterface->logout($request);
             return redirect('/');
         }
-    }
-
-    /**
-     * Authenticated
-     */
-    protected function authenticated(Request $request)
-    {
-        $request->session()->regenerate();
-        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\AlbumTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddFavouriteAlbumRequest extends FormRequest
 {
+    use AlbumTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -34,10 +36,10 @@ class AddFavouriteAlbumRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $albumInfo = explode('|', $this->id);
+        [$album, $artist] = $this->getAlbumAndArtistFromId($this->id);
         $this->merge([
-            'album' => $albumInfo[0],
-            'artist' => $albumInfo[1],
+            'album' => $album,
+            'artist' => $artist,
         ]);
     }
 }

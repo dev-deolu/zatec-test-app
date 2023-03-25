@@ -12,14 +12,13 @@ class AlbumResource
     }
 
     /**
-     * Request to api service
+     * Request api call
      */
     private function call(string $limit, array $query): Response
     {
         return $this->service->get(
-            request: $this->service->buildRequestWithApiKey(),
             url: "/2.0/",
-            query: array_merge(['api_key' => $this->service->api_key, 'format' => 'json', 'limit' => $limit,], $query)
+            query: array_merge(['api_key' => $this->service->api_key, 'format' => 'json', 'limit' => $limit], $query)
         );
     }
 
@@ -34,7 +33,7 @@ class AlbumResource
     /**
      * Get Album info
      */
-    public function info(string $album, string $artist, string $limit = '100')
+    public function getInfo(string $album, string $artist, string $limit = '100'): ?array
     {
         return $this->call($limit, ['method' => 'album.getinfo', 'artist' => $artist, 'album' => $album])->json()['album'] ?? NULL;
     }
