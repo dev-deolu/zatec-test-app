@@ -32,9 +32,6 @@ class ProfileTest extends TestCase
     public function test_profile_can_view_favorite_artists(): void
     {
         $user = $this->create_user('test@example.com');
-        $user->loadMissing('artists');
-        $instance = Assert::fromTestResponse($this->actingAs($user)->get('/profile'));
-
         $this->actingAs($user)->get('/profile')->assertOk()->assertInertia(
             fn (Assert $page) => $page
                 ->component('Profile')
@@ -45,7 +42,6 @@ class ProfileTest extends TestCase
     public function test_profile_can_view_favorite_albums(): void
     {
         $user = $this->create_user('test@example.com');
-
         $this->actingAs($user)->get('/profile')->assertOk()->assertInertia(
             fn (Assert $page) => $page
                 ->component('Profile')
@@ -64,7 +60,6 @@ class ProfileTest extends TestCase
         $this->actingAs($user)->post('/artist', [
             "id" => 'loveme'
         ])->assertStatus(302);
-
         $this->actingAs($user)->post('/album', [
             "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
         ])->assertStatus(302);
