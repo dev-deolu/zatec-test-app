@@ -107,8 +107,6 @@ class ArtistTest extends TestCase
             'password' => Hash::make('password'),
             'password_confirmation' => 'password',
         ]);
-
-
         return $user;
     }
 }
