@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Services\LastFmService;
 use Illuminate\Support\Facades\Redirect;
-use App\Interfaces\ArtistRepositoryInterface;
+use App\Interfaces\ArtistServiceInterface;
 use App\Http\Requests\AddFavouriteArtistRequest;
 
 class ArtistController extends Controller
@@ -14,10 +13,10 @@ class ArtistController extends Controller
     /**
      * Create a new artist controller instance.
      *
-     * @param  ArtistRepositoryInterface $artistRepository
+     * @param  ArtistServiceInterface $artistService
      * @return void
      */
-    public function __construct(private ArtistRepositoryInterface $artistRepository, private LastFmService $api)
+    public function __construct(private ArtistServiceInterface $artistService)
     {
     }
 
@@ -27,18 +26,9 @@ class ArtistController extends Controller
      */
     public function index(Request $request)
     {
-        $artist = null;
-        $favorites = $request->user()->artists->transform(function ($artist) {
-            return $artist->artist;
-        })->toArray();
-
-        $request->whenFilled('search', function ($search) use (&$artist, $favorites) {
-            $artist =  $this->api->artist()->search($search);
-        }, function () use (&$artist, $favorites) {
-            $artist = $favorites ?: $this->api->artist()->search(fake()->realText(10), 15);
-        });
+        [$artists, $favorites] = $this->artistService->getArtistAndFavoriteWithSearch($request->user(), $request->input('search', null));
         return Inertia::render('Artist', [
-            'artists' => $artist,
+            'artists' => $artists,
             'favorites' => $favorites ?? []
         ]);
     }
@@ -49,49 +39,28 @@ class ArtistController extends Controller
     public function store(AddFavouriteArtistRequest $request)
     {
         // check the db
-        $album = $this->artistRepository->findArtist($request->user()->id, $request->id);
-        if ($album) {
-            return Redirect::back();
-        }
-        // api call to get album
-        if ($getAlbum = $this->api->artist()->info($request->id))
-            // store record of album to add to favorite
-            $this->artistRepository->createArtist($request->user()->id, $getAlbum);
-
+        $this->artistService->addFavoriteArtist($request->user(), $request->id);
         return Redirect::back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $artist)
     {
+        $user = request()->user();
         return Inertia::render('ArtistDetails', [
-            'artist' => $this->findArtist($id),
-            'favorites' => request()->user()->artists ?? []
+            'artist' => $this->artistService->getArtist($user, $artist),
+            'favorites' => $this->artistService->getFavoriteArtists($user)
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $artist)
     {
-        $this->artistRepository->destroyArtist(auth()->user()->id, $id);
+        $this->artistService->removeFavoriteArtist(request()->user(), $artist);
         return Redirect::back();
-    }
-
-    /**
-     * Find album either in db or api call
-     */
-    protected function findArtist(string $id): ?array
-    {
-        // check the db
-        $artist = $this->artistRepository->findArtist(auth()->id(), $id);
-        if ($artist) {
-            return $artist->artist;
-        }
-        // api check
-        return $this->api->artist()->info($id);
     }
 }

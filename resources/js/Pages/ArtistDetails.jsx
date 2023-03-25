@@ -11,7 +11,7 @@ const ArtistDetails = (props) => {
         bio: props?.artist?.bio?.content ? props?.artist?.bio?.content : "NO CONTENT"
     };
     const isFavorite = (artist) => {
-        return props?.favorites.some((favorite) => favorite.artist.name.toLowerCase() == artist.toLowerCase() || favorite.artist.mbid == artist.toLowerCase())
+        return props?.favorites.some((favorite) => favorite.name.toLowerCase() == artist.toLowerCase() || favorite.mbid == artist.toLowerCase())
     }
 
     return (
