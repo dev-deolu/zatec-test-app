@@ -3,22 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use App\Interfaces\AuthServiceInterface;
 
 class LogoutController extends Controller
 {
-     /**
+    /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request, AuthServiceInterface $authServiceInterface): RedirectResponse
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
+        $authServiceInterface->logout($request);
         return redirect('/');
     }
 }

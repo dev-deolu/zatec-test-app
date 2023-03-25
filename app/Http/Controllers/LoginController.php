@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Interfaces\AuthServiceInterface;
 
 class LoginController extends Controller
 {
@@ -20,13 +21,9 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request, AuthServiceInterface $authServiceInterface)
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
+        $authServiceInterface->login($request);
         return redirect()->intended(RouteServiceProvider::HOME);
     }
-
 }

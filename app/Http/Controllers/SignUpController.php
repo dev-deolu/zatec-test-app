@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+
 use Inertia\Inertia;
 use App\Http\Requests\SignUpRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
+use App\Interfaces\AuthServiceInterface;
 use App\Providers\RouteServiceProvider;
 
 class SignUpController extends Controller
@@ -23,15 +21,9 @@ class SignUpController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SignUpRequest $request)
+    public function store(SignUpRequest $request, AuthServiceInterface $authServiceInterface)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        event(new Registered($user));
-        Auth::login($user);
+        $authServiceInterface->register($request);
         return redirect(RouteServiceProvider::HOME);
     }
 }
