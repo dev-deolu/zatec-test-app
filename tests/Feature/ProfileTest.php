@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Models\Artist;
+
 use Tests\TestCase;
 use App\Models\User;
-use App\Repositories\ArtistRepository;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
