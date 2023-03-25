@@ -22,7 +22,7 @@ class AddFavouriteArtistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'string'],
+            'artist' => ['required', 'string'],
         ];
     }
 }

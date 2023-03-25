@@ -38,7 +38,7 @@ const ArtistDetails = (props) => {
                 </div>
                 <div className="">
                     {isFavorite(data.id) ? <Link
-                        href={route('artist.destroy', { "id": data.id })}
+                        href={route('artist.destroy', { "artist": data.id })}
                         method="delete"
                         as="button"
                         className=" " >
@@ -47,7 +47,7 @@ const ArtistDetails = (props) => {
                         </div>
 
                     </Link> : <Link
-                        href={route('artist.store', { "id": data.id })}
+                        href={route('artist.store', { "artist": data.id })}
                         method="post"
                         as="button"
                         className=" " >

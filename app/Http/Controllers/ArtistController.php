@@ -39,7 +39,7 @@ class ArtistController extends Controller
     public function store(AddFavouriteArtistRequest $request)
     {
         // check the db
-        $this->artistService->addFavoriteArtist($request->user(), $request->id);
+        $this->artistService->addFavoriteArtist($request->user(), $request->artist);
         return Redirect::back();
     }
 
