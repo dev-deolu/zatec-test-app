@@ -9,15 +9,15 @@ interface AlbumRepositoryInterface
     /**
      * Create a favorite album record
      */
-    public function createAlbum(int $user_id, array $album): ?Album;
+    public function addFavoriteAlbum(int $user_id, array $album): ?Album;
 
     /**
-     * Delete a favorite album record
+     * Remove from favorite album record
      */
-    public function destroyAlbum(int $user_id, string $album, string $artist): bool;
+    public function removeFavoriteAlbum(int $user_id, string $album, string $artist): bool;
 
     /**
-     * Find by Album and Artist
+     * Find favorite Album by Album and Artist
      */
-    public function findByAlbumArtist(int $user_id, string $album, string $artist): ?Album;
+    public function findFavoriteAlbum(int $user_id, string $album, string $artist): ?Album;
 }

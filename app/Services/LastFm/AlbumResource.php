@@ -18,7 +18,7 @@ class AlbumResource
     {
         return $this->service->get(
             url: "/2.0/",
-            query: array_merge(['api_key' => $this->service->api_key, 'format' => 'json', 'limit' => $limit,], $query)
+            query: array_merge(['api_key' => $this->service->api_key, 'format' => 'json', 'limit' => $limit], $query)
         );
     }
 
