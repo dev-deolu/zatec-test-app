@@ -12,7 +12,7 @@ const AlbumDetails = (props) => {
         id: props?.album?.name + '|' + props?.album?.artist,
     };
     const isFavorite = (album, artist) => {
-        return props.favorites.some((favorite) => favorite.album.name.toLowerCase() == album.toLowerCase() && favorite.album.artist.toLowerCase() == artist.toLowerCase())
+        return props.favorites.some((favorite) => favorite.name.toLowerCase() == album.toLowerCase() && favorite.artist.toLowerCase() == artist.toLowerCase())
     }
     return (
         <AuthenticatedLayout

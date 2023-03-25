@@ -33,7 +33,7 @@ class ArtistTest extends TestCase
         $user = $this->create_user('test@example.com');
 
         $this->actingAs($user)->from('artist')->post('/artist', [
-            "id" => 'loveme'
+            "artist" => 'loveme'
         ])->assertSessionHasNoErrors()->assertFound();
     }
 
@@ -43,7 +43,7 @@ class ArtistTest extends TestCase
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/artist')->post('/artist', [
-            "id" => 'loveme'
+            "artist" => 'loveme'
         ])->assertSessionHasNoErrors()->assertFound();
         $this->actingAs($user)->get('/artist')->assertOk()->assertInertia(
             fn (Assert $page) => $page
@@ -57,7 +57,7 @@ class ArtistTest extends TestCase
         $user = $this->create_user('test@example.com');
 
         $this->actingAs($user)->from('artist')->post('/artist', [
-            "id" => 'loveme'
+            "artist" => 'loveme'
         ])->assertSessionHasNoErrors()->assertFound();
 
         $this->actingAs($user)->get('/artist')->assertOk()->assertInertia(
@@ -72,7 +72,7 @@ class ArtistTest extends TestCase
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/artist')->post('/artist', [
-            "id" => 'loveme'
+            "artist" => 'loveme'
         ])->assertSessionHasNoErrors()->assertFound();
         $this->actingAs($user)->from('/artist')->get('/artist')->assertOk()->assertInertia(
             fn (Assert $page) => $page
@@ -84,10 +84,10 @@ class ArtistTest extends TestCase
     public function test_user_can_view_a_artist(): void
     {
         $user = $this->create_user('test@example.com');
-        $this->actingAs($user)->from('/album')->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+        $this->actingAs($user)->from('/artist')->post('/artist', [
+            "artist" => 'loveme'
         ])->assertSessionHasNoErrors()->assertFound();
-        $this->actingAs($user)->from('/album')->get('/artist/' . 'loveme')->assertOk()->assertInertia(
+        $this->actingAs($user)->from('/artist')->get('/artist/' . 'loveme')->assertOk()->assertInertia(
             fn (Assert $page) => $page
                 ->component('ArtistDetails')
                 ->hasAll(['artist', 'favorites'])
