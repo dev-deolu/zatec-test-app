@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -14,7 +13,8 @@ class ProfileController extends Controller
     public function index(): Response
     {
         return Inertia::render('Profile', [
-            'user' => request()->user(),
+            'albums' => request()->user()->albums,
+            'artists' => request()->user()->artists,
         ]);
     }
 }
