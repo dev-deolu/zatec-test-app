@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -79,6 +78,19 @@ class ArtistTest extends TestCase
             fn (Assert $page) => $page
                 ->component('Artist')
                 ->has('artists')
+        );
+    }
+
+    public function test_user_can_view_a_artist(): void
+    {
+        $user = $this->create_user('test@example.com');
+        $this->actingAs($user)->from('/album')->post('/album', [
+            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+        ])->assertSessionHasNoErrors()->assertFound();
+        $this->actingAs($user)->from('/album')->get('/artist/' . 'loveme')->assertOk()->assertInertia(
+            fn (Assert $page) => $page
+                ->component('ArtistDetails')
+                ->hasAll(['artist', 'favorites'])
         );
     }
 

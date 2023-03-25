@@ -12,12 +12,12 @@ interface ArtistRepositoryInterface
     public function addFavoriteArtist(int $user_id, array $artist): ?Artist;
 
     /**
-     * Delete a favorite artist record
+     * Remove from favorite artist record
      */
     public function removeFavoriteArtist(int $user_id,  string $artist): bool;
 
     /**
-     * Find by Artist
+     * Find favorite Artist by Artist
      */
     public function findFavoriteArtist(int $user_id, string $artist): ?Artist;
 }

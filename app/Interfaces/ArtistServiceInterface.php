@@ -11,7 +11,7 @@ interface ArtistServiceInterface
     /**
      * Get Artist
      */
-    public function getArtist(User $user, $artistId): ?array;
+    public function getArtist(User $user, string $artistId): ?array;
 
     /**
      * Get Favorite Artists
