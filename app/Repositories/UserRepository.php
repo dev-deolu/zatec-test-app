@@ -19,4 +19,12 @@ class UserRepository implements UserRepositoryInterface
             'password' =>  Hash::make($password),
         ]);
     }
+
+    /**
+     * Find user by email
+     */
+    public function findUserByEmail(string $email): ?User
+    {
+        return  User::where('email', $email)->first();
+    }
 }

@@ -28,6 +28,15 @@ interface AuthServiceInterface
     public function login(LoginRequest $request): void;
 
     /**
+     * Login a user using Google
+     * @param \Laravel\Socialite\Contracts\User $googleUser
+     *
+     * @return void
+     * @throws ValidationException
+     */
+    public function loginUsingGoogle(\Laravel\Socialite\Contracts\User $googleUser): void;
+
+    /**
      * Logout a user
      * @param Request $request
      *

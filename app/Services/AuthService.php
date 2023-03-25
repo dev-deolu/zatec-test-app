@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
-use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\AuthServiceInterface;
+use Laravel\Socialite\Facades\Socialite;
+use App\Interfaces\UserRepositoryInterface;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Validation\ValidationException;
 
 class AuthService implements AuthServiceInterface
@@ -35,8 +37,7 @@ class AuthService implements AuthServiceInterface
         if (!$user)
             throw ValidationException::withMessages(['user' => 'error creating user'])->status(406);
 
-        event(new Registered($user));
-        Auth::login($user);
+        $this->loginUsingUser($user);
     }
 
     /**
@@ -53,6 +54,17 @@ class AuthService implements AuthServiceInterface
         $request->session()->regenerate();
     }
 
+    public function loginUsingGoogle(\Laravel\Socialite\Contracts\User $googleUser): void
+    {
+        // find user by email (email is unique to db)
+        $user = $this->userRepository->findUserByEmail($googleUser->getEmail());
+        if ($user) {
+            $this->loginUsingUser($user);
+            return;
+        }
+        $this->loginUsingUser($this->userRepository->addUser($googleUser->getName(), $googleUser->getEmail(), $googleUser->getId()));
+    }
+
     /**
      * Logout a user
      * @param Request $request
@@ -66,5 +78,15 @@ class AuthService implements AuthServiceInterface
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+    }
+
+    /**
+     * Login using Authenticatable User
+     * @param Authenticatable User
+     * @return void
+     */
+    private function loginUsingUser(Authenticatable $user): void
+    {
+        Auth::login($user);
     }
 }
