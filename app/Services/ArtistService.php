@@ -12,8 +12,10 @@ class ArtistService implements ArtistServiceInterface
     /**
      * Create a new Artist Service instance.
      */
-    public function __construct(private ArtistRepositoryInterface $artistRepository, private LastFmService $api)
-    {
+    public function __construct(
+        private ArtistRepositoryInterface $artistRepository,
+        private LastFmService $api
+    ) {
     }
 
     /**

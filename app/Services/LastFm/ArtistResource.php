@@ -7,6 +7,9 @@ use Illuminate\Http\Client\Response;
 
 class ArtistResource
 {
+    /**
+     * Create a new Artist Service instance.
+     */
     public function __construct(private readonly LastFmService $service)
     {
     }
