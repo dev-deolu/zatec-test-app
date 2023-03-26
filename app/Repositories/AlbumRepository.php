@@ -2,13 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
-use App\Models\Album;
 use App\Interfaces\AlbumRepositoryInterface;
+use App\Models\Album;
 
 class AlbumRepository implements AlbumRepositoryInterface
 {
-
     public function findFavoriteAlbum(int $user_id, string $album, string $artist): ?Album
     {
         return Album::where('user_id', $user_id)->whereJsonContains('album->name', $album)->whereJsonContains('album->artist', $artist)->first();

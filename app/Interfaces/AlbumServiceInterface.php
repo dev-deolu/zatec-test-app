@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Interfaces;
 
 use App\Models\User;
 
 interface AlbumServiceInterface
 {
-     /**
+    /**
      * Get Album
      */
     public function getAlbum(User $user, string $albumId, string $artistId): ?array;
@@ -22,6 +23,7 @@ interface AlbumServiceInterface
 
     /**
      * Create a favorite album record
+     *
      * @throws ValidationException
      */
     public function addFavoriteAlbum(User $user, string $albumId, string $artistId): ?array;

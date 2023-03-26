@@ -12,8 +12,10 @@ trait AlbumTrait
     public function getAlbumAndArtistFromId(string $string, int $arrayCount = 2, string $seperator = '|'): array
     {
         (array) $result = explode($seperator, $string);
-        if (count($result) < $arrayCount)
-            throw ValidationException::withMessages(['id' => "invalid id"])->status(406);
+        if (count($result) < $arrayCount) {
+            throw ValidationException::withMessages(['id' => 'invalid id'])->status(406);
+        }
+
         return $result;
     }
 }

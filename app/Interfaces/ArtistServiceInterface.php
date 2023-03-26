@@ -5,7 +5,6 @@ namespace App\Interfaces;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
-
 interface ArtistServiceInterface
 {
     /**
@@ -25,6 +24,7 @@ interface ArtistServiceInterface
 
     /**
      * Create a favorite artist record
+     *
      * @throws ValidationException
      */
     public function addFavoriteArtist(User $user, string $artistId): ?array;

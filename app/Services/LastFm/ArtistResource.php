@@ -17,7 +17,7 @@ class ArtistResource
     private function call(string $limit, array $query): Response
     {
         return $this->service->get(
-            url: "/2.0/",
+            url: '/2.0/',
             query: array_merge(['api_key' => $this->service->api_key, 'format' => 'json', 'limit' => $limit], $query)
         );
     }
@@ -27,7 +27,7 @@ class ArtistResource
      */
     public function search(string $artist, string $limit = '100'): ?array
     {
-        return $this->call($limit, ['method' => 'artist.search', 'artist' => $artist])->json()['results']['artistmatches']['artist'] ?? NULL;
+        return $this->call($limit, ['method' => 'artist.search', 'artist' => $artist])->json()['results']['artistmatches']['artist'] ?? null;
     }
 
     /**
@@ -35,6 +35,6 @@ class ArtistResource
      */
     public function getInfo(string $artist, string $limit = '100'): ?array
     {
-        return $this->call($limit, ['method' => 'artist.getinfo', str($artist)->isUuid() ? 'mbid' : 'artist'  => $artist])->json()['artist'] ?? NULL;
+        return $this->call($limit, ['method' => 'artist.getinfo', str($artist)->isUuid() ? 'mbid' : 'artist' => $artist])->json()['artist'] ?? null;
     }
 }

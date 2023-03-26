@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Services\LastFm\AlbumResource;
 use App\Services\LastFm\ArtistResource;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\PendingRequest;
 
 class LastFmService
 {
@@ -24,12 +24,8 @@ class LastFmService
 
     /**
      * Issue a GET request to the given URL.
-     *
-     * @param  string  $url
-     * @param  array $query
-     * @return \Illuminate\Http\Client\Response
      */
-    public function get(string $url =  "/2.0/", array $query = []): Response
+    public function get(string $url = '/2.0/', array $query = []): Response
     {
         return $this->buildBaseUrl()->get(
             url: $url,
@@ -40,9 +36,7 @@ class LastFmService
     /**
      * Issue a POST request to the given URL.
      *
-     * @param  string  $url
      * @param  array  $data
-     * @return \Illuminate\Http\Client\Response
      */
     public function post(string $url, array $payload = []): Response
     {

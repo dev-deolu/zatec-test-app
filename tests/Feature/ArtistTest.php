@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ArtistTest extends TestCase
 {
@@ -33,17 +33,15 @@ class ArtistTest extends TestCase
         $user = $this->create_user('test@example.com');
 
         $this->actingAs($user)->from('artist')->post('/artist', [
-            "artist" => 'loveme'
+            'artist' => 'loveme',
         ])->assertSessionHasNoErrors()->assertFound();
     }
-
-
 
     public function test_user_can_view_favorite_artists(): void
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/artist')->post('/artist', [
-            "artist" => 'loveme'
+            'artist' => 'loveme',
         ])->assertSessionHasNoErrors()->assertFound();
         $this->actingAs($user)->get('/artist')->assertOk()->assertInertia(
             fn (Assert $page) => $page
@@ -57,7 +55,7 @@ class ArtistTest extends TestCase
         $user = $this->create_user('test@example.com');
 
         $this->actingAs($user)->from('artist')->post('/artist', [
-            "artist" => 'loveme'
+            'artist' => 'loveme',
         ])->assertSessionHasNoErrors()->assertFound();
 
         $this->actingAs($user)->get('/artist')->assertOk()->assertInertia(
@@ -72,7 +70,7 @@ class ArtistTest extends TestCase
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/artist')->post('/artist', [
-            "artist" => 'loveme'
+            'artist' => 'loveme',
         ])->assertSessionHasNoErrors()->assertFound();
         $this->actingAs($user)->from('/artist')->get('/artist')->assertOk()->assertInertia(
             fn (Assert $page) => $page
@@ -85,9 +83,9 @@ class ArtistTest extends TestCase
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/artist')->post('/artist', [
-            "artist" => 'loveme'
+            'artist' => 'loveme',
         ])->assertSessionHasNoErrors()->assertFound();
-        $this->actingAs($user)->from('/artist')->get('/artist/' . 'loveme')->assertOk()->assertInertia(
+        $this->actingAs($user)->from('/artist')->get('/artist/'.'loveme')->assertOk()->assertInertia(
             fn (Assert $page) => $page
                 ->component('ArtistDetails')
                 ->hasAll(['artist', 'favorites'])
@@ -99,7 +97,7 @@ class ArtistTest extends TestCase
         $user = $this->create_user('test@example.com');
         $search = 'loveme';
 
-        $response =  $this->actingAs($user)->from('/artist')->get('/artist?search=' . $search)->assertOk()
+        $response = $this->actingAs($user)->from('/artist')->get('/artist?search='.$search)->assertOk()
             ->assertInertia(
                 fn (Assert $page) => $page
                     ->component('Artist')
@@ -109,8 +107,6 @@ class ArtistTest extends TestCase
         $response->assertSessionHasNoErrors()->assertOk();
     }
 
-
-
     private function create_user(string $email)
     {
         $user = User::create([
@@ -119,6 +115,7 @@ class ArtistTest extends TestCase
             'password' => Hash::make('password'),
             'password_confirmation' => 'password',
         ]);
+
         return $user;
     }
 }

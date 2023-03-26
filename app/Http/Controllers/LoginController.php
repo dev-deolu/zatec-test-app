@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Interfaces\AuthServiceInterface;
+use App\Providers\RouteServiceProvider;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Http\Requests\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use App\Interfaces\AuthServiceInterface;
 
 class LoginController extends Controller
 {
@@ -24,6 +24,7 @@ class LoginController extends Controller
     public function store(LoginRequest $request, AuthServiceInterface $authServiceInterface)
     {
         $authServiceInterface->login($request);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 }

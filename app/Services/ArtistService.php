@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Services\LastFmService;
-use App\Interfaces\ArtistServiceInterface;
 use App\Interfaces\ArtistRepositoryInterface;
+use App\Interfaces\ArtistServiceInterface;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class ArtistService implements ArtistServiceInterface
@@ -28,9 +27,10 @@ class ArtistService implements ArtistServiceInterface
     {
         // check the db
         $artist = $this->artistRepository->findFavoriteArtist($user->id, $artistId);
-        if ($artist && !empty($artist->artist)) {
+        if ($artist && ! empty($artist->artist)) {
             return $artist->artist;
         }
+
         return $this->api->artist()->getInfo($artistId);
     }
 
@@ -40,6 +40,7 @@ class ArtistService implements ArtistServiceInterface
     public function getFavoriteArtists(User $user): ?array
     {
         $user->loadMissing('artists');
+
         return $user->artists->transform(function ($artist) {
             return $artist->artist;
         })->toArray();
@@ -54,10 +55,11 @@ class ArtistService implements ArtistServiceInterface
         $favorites = $this->getFavoriteArtists($user);
         // check if search is filled
         $this->whenFilled($search, function ($search) use (&$artists) {
-            $artists =  $this->api->artist()->search($search);
+            $artists = $this->api->artist()->search($search);
         }, function () use (&$artists, $favorites) {
             $artists = $favorites ?: $this->api->artist()->search(fake()->realText(10), 15);
         });
+
         return [$artists, $favorites];
     }
 
@@ -68,7 +70,7 @@ class ArtistService implements ArtistServiceInterface
     {
         // check the db
         $artist = $this->artistRepository->findFavoriteArtist($user->id, $artistId);
-        if ($artist && !empty($artist->artist)) {
+        if ($artist && ! empty($artist->artist)) {
             return $artist->artist;
         }
         // api call to get artist
@@ -95,19 +97,18 @@ class ArtistService implements ArtistServiceInterface
      * Apply the callback if variable contains a non-empty value for the given variable.
      *
      * @param  string|null  $search
-     * @param  callable  $callback
-     * @param  callable|null  $default
      * @return $this|mixed
      */
     private function whenFilled($search, callable $callback, callable $default = null)
     {
-        if (!empty($search)) {
+        if (! empty($search)) {
             return $callback($search) ?: $this;
         }
 
         if ($default) {
             return $default();
         }
+
         return $this;
     }
 }

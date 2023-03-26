@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
+use App\Http\Requests\AddFavouriteArtistRequest;
+use App\Interfaces\ArtistServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Interfaces\ArtistServiceInterface;
-use App\Http\Requests\AddFavouriteArtistRequest;
+use Inertia\Inertia;
 
 class ArtistController extends Controller
 {
     /**
      * Create a new artist controller instance.
      *
-     * @param  ArtistServiceInterface $artistService
      * @return void
      */
     public function __construct(private ArtistServiceInterface $artistService)
     {
     }
-
 
     /**
      * Display a listing of the resource.
@@ -27,9 +25,10 @@ class ArtistController extends Controller
     public function index(Request $request)
     {
         [$artists, $favorites] = $this->artistService->getArtistAndFavoriteWithSearch($request->user(), $request->input('search', null));
+
         return Inertia::render('Artist', [
             'artists' => $artists,
-            'favorites' => $favorites ?? []
+            'favorites' => $favorites ?? [],
         ]);
     }
 
@@ -40,6 +39,7 @@ class ArtistController extends Controller
     {
         // check the db
         $this->artistService->addFavoriteArtist($request->user(), $request->artist);
+
         return Redirect::back();
     }
 
@@ -49,9 +49,10 @@ class ArtistController extends Controller
     public function show(string $artist)
     {
         $user = request()->user();
+
         return Inertia::render('ArtistDetails', [
             'artist' => $this->artistService->getArtist($user, $artist),
-            'favorites' => $this->artistService->getFavoriteArtists($user)
+            'favorites' => $this->artistService->getFavoriteArtists($user),
         ]);
     }
 
@@ -61,6 +62,7 @@ class ArtistController extends Controller
     public function destroy(string $artist)
     {
         $this->artistService->removeFavoriteArtist(request()->user(), $artist);
+
         return Redirect::back();
     }
 }
