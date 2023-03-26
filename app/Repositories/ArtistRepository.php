@@ -2,12 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Artist;
 use App\Interfaces\ArtistRepositoryInterface;
+use App\Models\Artist;
 
 class ArtistRepository implements ArtistRepositoryInterface
 {
-
     public function findFavoriteArtist(int $user_id, string $artist): ?Artist
     {
         return Artist::where('user_id', $user_id)->identifier($artist)->first();

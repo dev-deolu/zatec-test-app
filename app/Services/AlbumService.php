@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Interfaces\AlbumServiceInterface;
 use App\Interfaces\AlbumRepositoryInterface;
+use App\Interfaces\AlbumServiceInterface;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class AlbumService implements AlbumServiceInterface
@@ -27,9 +27,10 @@ class AlbumService implements AlbumServiceInterface
     {
         // check the db
         $album = $this->albumRepository->findFavoriteAlbum($user->id, $albumId, $artistId);
-        if ($album && !empty($album->album)) {
+        if ($album && ! empty($album->album)) {
             return $album->album;
         }
+
         return $this->api->album()->getInfo($albumId, $artistId);
     }
 
@@ -39,6 +40,7 @@ class AlbumService implements AlbumServiceInterface
     public function getFavoriteAlbums(User $user): ?array
     {
         $user->loadMissing('albums');
+
         return $user->albums->transform(function ($album) {
             return $album->album;
         })->toArray();
@@ -53,22 +55,24 @@ class AlbumService implements AlbumServiceInterface
         $favorites = $this->getFavoriteAlbums($user);
 
         $this->whenFilled($search, function ($search) use (&$albums) {
-            $albums =  $this->api->album()->search($search);
+            $albums = $this->api->album()->search($search);
         }, function () use (&$albums, $favorites) {
             $albums = $favorites ?: $this->api->album()->search(fake()->realText(10), 15);
         });
+
         return [$albums, $favorites];
     }
 
     /**
      * Create a favorite album record
+     *
      * @throws ValidationException
      */
     public function addFavoriteAlbum(User $user, string $albumId, string $artistId): ?array
     {
         // check the db
         $album = $this->albumRepository->findFavoriteAlbum($user->id, $albumId, $artistId);
-        if ($album && !empty($album->album)) {
+        if ($album && ! empty($album->album)) {
             return $album->album;
         }
         // api call to get album
@@ -95,19 +99,18 @@ class AlbumService implements AlbumServiceInterface
      * Apply the callback if variable contains a non-empty value for the given variable.
      *
      * @param  string|null  $search
-     * @param  callable  $callback
-     * @param  callable|null  $default
      * @return $this|mixed
      */
     private function whenFilled($search, callable $callback, callable $default = null)
     {
-        if (!empty($search)) {
+        if (! empty($search)) {
             return $callback($search) ?: $this;
         }
 
         if ($default) {
             return $default();
         }
+
         return $this;
     }
 }

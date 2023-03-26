@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-
-use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProfileTest extends TestCase
 {
@@ -58,11 +57,12 @@ class ProfileTest extends TestCase
             'password_confirmation' => 'password',
         ]);
         $this->actingAs($user)->post('/artist', [
-            "id" => 'loveme'
+            'id' => 'loveme',
         ])->assertStatus(302);
         $this->actingAs($user)->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+            'id' => 'loveme'.'|'.'Nicoteen Ninyo',
         ])->assertStatus(302);
+
         return $user;
     }
 }

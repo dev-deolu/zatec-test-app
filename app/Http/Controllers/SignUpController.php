@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
-use Inertia\Inertia;
 use App\Http\Requests\SignUpRequest;
 use App\Interfaces\AuthServiceInterface;
 use App\Providers\RouteServiceProvider;
+use Inertia\Inertia;
 
 class SignUpController extends Controller
 {
@@ -24,6 +23,7 @@ class SignUpController extends Controller
     public function store(SignUpRequest $request, AuthServiceInterface $authServiceInterface)
     {
         $authServiceInterface->register($request);
+
         return redirect(RouteServiceProvider::HOME);
     }
 }

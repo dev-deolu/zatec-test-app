@@ -2,13 +2,10 @@
 
 namespace Tests\Feature;
 
-use Mockery;
-use Tests\TestCase;
-use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
+use Tests\TestCase;
 
 class GoogleIntegrationTest extends TestCase
 {
@@ -25,7 +22,7 @@ class GoogleIntegrationTest extends TestCase
             ->shouldReceive('getName')
             ->andReturn('test user')
             ->shouldReceive('getEmail')
-            ->andReturn('test.user' . '@gmail.com')
+            ->andReturn('test.user'.'@gmail.com')
             ->shouldReceive('getAvatar')
             ->andReturn('https://en.gravatar.com/userimage');
 

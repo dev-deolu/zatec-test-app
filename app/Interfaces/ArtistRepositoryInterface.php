@@ -14,7 +14,7 @@ interface ArtistRepositoryInterface
     /**
      * Remove from favorite artist record
      */
-    public function removeFavoriteArtist(int $user_id,  string $artist): bool;
+    public function removeFavoriteArtist(int $user_id, string $artist): bool;
 
     /**
      * Find favorite Artist by Artist

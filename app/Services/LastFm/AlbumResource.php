@@ -17,7 +17,7 @@ class AlbumResource
     private function call(string $limit, array $query): Response
     {
         return $this->service->get(
-            url: "/2.0/",
+            url: '/2.0/',
             query: array_merge(['api_key' => $this->service->api_key, 'format' => 'json', 'limit' => $limit], $query)
         );
     }
@@ -27,7 +27,7 @@ class AlbumResource
      */
     public function search(string $album, string $limit = '100'): ?array
     {
-        return $this->call($limit, ['method' => 'album.search', 'album' => $album])->json()['results']['albummatches']['album'] ?? NULL;
+        return $this->call($limit, ['method' => 'album.search', 'album' => $album])->json()['results']['albummatches']['album'] ?? null;
     }
 
     /**
@@ -35,6 +35,6 @@ class AlbumResource
      */
     public function getInfo(string $album, string $artist, string $limit = '100'): ?array
     {
-        return $this->call($limit, ['method' => 'album.getinfo', 'artist' => $artist, 'album' => $album])->json()['album'] ?? NULL;
+        return $this->call($limit, ['method' => 'album.getinfo', 'artist' => $artist, 'album' => $album])->json()['album'] ?? null;
     }
 }

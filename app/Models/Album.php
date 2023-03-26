@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-
+use Illuminate\Database\Eloquent\Model;
 
 class Album extends Model
 {
@@ -26,7 +25,7 @@ class Album extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'user_id','deleted_at',
+        'user_id', 'deleted_at',
     ];
 
     /**
@@ -37,6 +36,4 @@ class Album extends Model
     protected $casts = [
         'album' => 'array',
     ];
-
-
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddFavouriteAlbumRequest;
+use App\Interfaces\AlbumServiceInterface;
+use App\Traits\AlbumTrait;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Traits\AlbumTrait;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
-use App\Interfaces\AlbumServiceInterface;
-use App\Http\Requests\AddFavouriteAlbumRequest;
 
 class AlbumController extends Controller
 {
@@ -18,7 +18,7 @@ class AlbumController extends Controller
     /**
      * Create a new album controller instance.
      *
-     * @param  AlbumServiceInterface $artistService
+     * @param  AlbumServiceInterface  $artistService
      * @return void
      */
     public function __construct(private AlbumServiceInterface $albumService)
@@ -31,9 +31,10 @@ class AlbumController extends Controller
     public function index(Request $request): Response
     {
         [$albums, $favorites] = $this->albumService->getAlbumAndFavoriteWithSearch($request->user(), $request->input('search', null));
+
         return Inertia::render('Album', [
             'albums' => $albums,
-            'favorites' => $favorites ?? []
+            'favorites' => $favorites ?? [],
         ]);
     }
 
@@ -43,10 +44,11 @@ class AlbumController extends Controller
     public function show(string $id): Response
     {
         [$album, $artist] = $this->getAlbumAndArtistFromId($id);
-        $user =  request()->user();
+        $user = request()->user();
+
         return Inertia::render('AlbumDetails', [
             'album' => $this->albumService->getAlbum($user, $album, $artist),
-            'favorites' => $this->albumService->getFavoriteAlbums($user)
+            'favorites' => $this->albumService->getFavoriteAlbums($user),
         ]);
     }
 
@@ -57,6 +59,7 @@ class AlbumController extends Controller
     {
         // check the db
         $album = $this->albumService->addFavoriteAlbum($request->user(), $request->album, $request->artist);
+
         return Redirect::back();
     }
 
@@ -67,6 +70,7 @@ class AlbumController extends Controller
     {
         [$album, $artist] = $this->getAlbumAndArtistFromId($id);
         $this->albumService->removeFavoriteAlbum(auth()->user(), $album, $artist);
+
         return Redirect::back();
     }
 }

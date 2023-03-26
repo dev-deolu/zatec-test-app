@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
-use Inertia\Testing\AssertableInertia as Assert;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Inertia\Testing\AssertableInertia as Assert;
+use Tests\TestCase;
 
 class AlbumTest extends TestCase
 {
@@ -34,17 +33,15 @@ class AlbumTest extends TestCase
         $user = $this->create_user('test@example.com');
 
         $this->actingAs($user)->from('album')->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+            'id' => 'loveme'.'|'.'Nicoteen Ninyo',
         ])->assertSessionHasNoErrors()->assertFound();
     }
-
-
 
     public function test_user_can_view_favorite_albums(): void
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/album')->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+            'id' => 'loveme'.'|'.'Nicoteen Ninyo',
         ])->assertSessionHasNoErrors()->assertFound();
         $this->actingAs($user)->get('/album')->assertOk()->assertInertia(
             fn (Assert $page) => $page
@@ -58,7 +55,7 @@ class AlbumTest extends TestCase
         $user = $this->create_user('test@example.com');
 
         $this->actingAs($user)->from('album')->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+            'id' => 'loveme'.'|'.'Nicoteen Ninyo',
         ])->assertSessionHasNoErrors()->assertFound();
 
         $this->actingAs($user)->get('/album')->assertOk()->assertInertia(
@@ -66,14 +63,14 @@ class AlbumTest extends TestCase
                 ->component('Album')
                 ->has('favorites.0')
         );
-        $this->actingAs($user)->from('album')->delete('/album/' . 'loveme' . '|' . 'Nicoteen Ninyo')->assertSessionHasNoErrors()->assertFound();
+        $this->actingAs($user)->from('album')->delete('/album/'.'loveme'.'|'.'Nicoteen Ninyo')->assertSessionHasNoErrors()->assertFound();
     }
 
     public function test_user_can_view_albums(): void
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/album')->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+            'id' => 'loveme'.'|'.'Nicoteen Ninyo',
         ])->assertSessionHasNoErrors()->assertFound();
         $this->actingAs($user)->from('/album')->get('/album')->assertOk()->assertInertia(
             fn (Assert $page) => $page
@@ -86,9 +83,9 @@ class AlbumTest extends TestCase
     {
         $user = $this->create_user('test@example.com');
         $this->actingAs($user)->from('/album')->post('/album', [
-            "id" => 'loveme' . '|' . 'Nicoteen Ninyo'
+            'id' => 'loveme'.'|'.'Nicoteen Ninyo',
         ])->assertSessionHasNoErrors()->assertFound();
-        $this->actingAs($user)->from('/album')->get('/album/' . 'loveme' . '|' . 'Nicoteen Ninyo')->assertOk()->assertInertia(
+        $this->actingAs($user)->from('/album')->get('/album/'.'loveme'.'|'.'Nicoteen Ninyo')->assertOk()->assertInertia(
             fn (Assert $page) => $page
                 ->component('AlbumDetails')
                 ->hasAll(['album', 'favorites'])
@@ -100,7 +97,7 @@ class AlbumTest extends TestCase
         $user = $this->create_user('test@example.com');
         $search = 'loveme';
 
-        $response =  $this->actingAs($user)->from('/album')->get('/album?search=' . $search)->assertOk()
+        $response = $this->actingAs($user)->from('/album')->get('/album?search='.$search)->assertOk()
             ->assertInertia(
                 fn (Assert $page) => $page
                     ->component('Album')
@@ -110,8 +107,6 @@ class AlbumTest extends TestCase
         $response->assertSessionHasNoErrors()->assertOk();
     }
 
-
-
     private function create_user(string $email)
     {
         $user = User::create([
@@ -120,6 +115,7 @@ class AlbumTest extends TestCase
             'password' => Hash::make('password'),
             'password_confirmation' => 'password',
         ]);
+
         return $user;
     }
 }

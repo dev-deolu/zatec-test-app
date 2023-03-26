@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use App\Interfaces\AuthServiceInterface;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
@@ -14,6 +14,7 @@ class LogoutController extends Controller
     public function destroy(Request $request, AuthServiceInterface $authServiceInterface): RedirectResponse
     {
         $authServiceInterface->logout($request);
+
         return redirect('/');
     }
 }

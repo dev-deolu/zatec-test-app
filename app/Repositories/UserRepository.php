@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Interfaces\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -16,7 +16,7 @@ class UserRepository implements UserRepositoryInterface
         return User::create([
             'name' => $name,
             'email' => $email,
-            'password' =>  Hash::make($password),
+            'password' => Hash::make($password),
         ]);
     }
 

@@ -2,21 +2,20 @@
 
 namespace App\Providers;
 
-
-use App\Services\AuthService;
-use App\Services\AlbumService;
-use App\Services\ArtistService;
-use App\Services\LastFmService;
-use App\Repositories\UserRepository;
+use App\Interfaces\AlbumRepositoryInterface;
+use App\Interfaces\AlbumServiceInterface;
+use App\Interfaces\ArtistRepositoryInterface;
+use App\Interfaces\ArtistServiceInterface;
+use App\Interfaces\AuthServiceInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\AlbumRepository;
 use App\Repositories\ArtistRepository;
+use App\Repositories\UserRepository;
+use App\Services\AlbumService;
+use App\Services\ArtistService;
+use App\Services\AuthService;
+use App\Services\LastFmService;
 use Illuminate\Support\ServiceProvider;
-use App\Interfaces\AuthServiceInterface;
-use App\Interfaces\AlbumServiceInterface;
-use App\Interfaces\ArtistServiceInterface;
-use App\Interfaces\UserRepositoryInterface;
-use App\Interfaces\AlbumRepositoryInterface;
-use App\Interfaces\ArtistRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

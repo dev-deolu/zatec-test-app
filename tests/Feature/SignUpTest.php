@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Mockery;
-use Tests\TestCase;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Laravel\Socialite\Facades\Socialite;
-use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
+use Laravel\Socialite\Facades\Socialite;
+use Mockery;
+use Tests\TestCase;
 
 class SignUpTest extends TestCase
 {
@@ -61,7 +61,7 @@ class SignUpTest extends TestCase
             ->shouldReceive('getName')
             ->andReturn('test user')
             ->shouldReceive('getEmail')
-            ->andReturn('test.user' . '@gmail.com')
+            ->andReturn('test.user'.'@gmail.com')
             ->shouldReceive('getAvatar')
             ->andReturn('https://en.gravatar.com/userimage');
 
@@ -76,6 +76,7 @@ class SignUpTest extends TestCase
 
     /**
      * An authenticated user cannot visit register page
+     *
      * @return void
      */
     public function test_user_cannot_visit_a_signup_form_when_authenticated()

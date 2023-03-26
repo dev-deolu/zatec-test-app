@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\SignUpController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SignUpController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +23,11 @@ use App\Http\Controllers\GoogleLoginController;
 Route::get('/', [LoginController::class, 'index'])->name('welcome')->middleware('guest');
 Route::resource('signup', SignUpController::class)->only(['index', 'store'])->names([
     'index' => 'signup',
-    'store' => 'signup'
+    'store' => 'signup',
 ])->middleware('guest');
 Route::resource('login', LoginController::class)->only(['index', 'store'])->names([
     'index' => 'login',
-    'store' => 'login'
+    'store' => 'login',
 ])->middleware('guest');
 
 Route::get('/google/login', [GoogleLoginController::class, 'index'])->name('google.login')->middleware('guest');
@@ -37,17 +37,17 @@ Route::post('logout', [LogoutController::class, 'destroy'])->name('logout')->mid
 
 Route::resource('profile', ProfileController::class)->only(['index', 'store'])->names([
     'index' => 'profile',
-    'store' => 'profile'
+    'store' => 'profile',
 ])->middleware('auth');
-Route::resource('album', AlbumController::class)->only(['index','show', 'store','destroy'])->names([
+Route::resource('album', AlbumController::class)->only(['index', 'show', 'store', 'destroy'])->names([
     'index' => 'album',
     'show' => 'album.show',
     'store' => 'album.store',
-    'destroy' => 'album.destroy'
+    'destroy' => 'album.destroy',
 ])->middleware('auth');
-Route::resource('artist', ArtistController::class)->only(['index', 'show', 'store','destroy'])->names([
+Route::resource('artist', ArtistController::class)->only(['index', 'show', 'store', 'destroy'])->names([
     'index' => 'artist',
     'show' => 'artist.show',
     'store' => 'artist.store',
-    'destroy' => 'artist.destroy'
+    'destroy' => 'artist.destroy',
 ])->middleware('auth');
