@@ -55,11 +55,10 @@ class AlbumService implements AlbumServiceInterface
         $favorites = $this->getFavoriteAlbums($user);
 
         $this->whenFilled($search, function ($search) use (&$albums) {
-            $albums = $this->api->album()->search($search);
+            $albums =  $this->api->album()->search($search);
         }, function () use (&$albums, $favorites) {
             $albums = $favorites ?: $this->api->album()->search(fake()->realText(10), 15);
         });
-
         return [$albums, $favorites];
     }
 
@@ -99,18 +98,19 @@ class AlbumService implements AlbumServiceInterface
      * Apply the callback if variable contains a non-empty value for the given variable.
      *
      * @param  string|null  $search
+     * @param  callable  $callback
+     * @param  callable|null  $default
      * @return $this|mixed
      */
     private function whenFilled($search, callable $callback, callable $default = null)
     {
-        if (! empty($search)) {
+        if (!empty($search)) {
             return $callback($search) ?: $this;
         }
 
         if ($default) {
             return $default();
         }
-
         return $this;
     }
 }

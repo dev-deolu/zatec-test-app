@@ -53,12 +53,11 @@ class ArtistService implements ArtistServiceInterface
     {
         $artists = [];
         $favorites = $this->getFavoriteArtists($user);
-        // check if search is filled
-        $this->whenFilled($search, function ($search) use (&$artists) {
+        if (! empty($search)) {
             $artists = $this->api->artist()->search($search);
-        }, function () use (&$artists, $favorites) {
+        } else {
             $artists = $favorites ?: $this->api->artist()->search(fake()->realText(10), 15);
-        });
+        }
 
         return [$artists, $favorites];
     }
@@ -91,24 +90,5 @@ class ArtistService implements ArtistServiceInterface
     public function removeFavoriteArtist(User $user, string $artistId): bool
     {
         return $this->artistRepository->removeFavoriteArtist($user->id, $artistId);
-    }
-
-    /**
-     * Apply the callback if variable contains a non-empty value for the given variable.
-     *
-     * @param  string|null  $search
-     * @return $this|mixed
-     */
-    private function whenFilled($search, callable $callback, callable $default = null)
-    {
-        if (! empty($search)) {
-            return $callback($search) ?: $this;
-        }
-
-        if ($default) {
-            return $default();
-        }
-
-        return $this;
     }
 }
