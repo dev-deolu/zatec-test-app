@@ -28,9 +28,15 @@ class AuthService implements AuthServiceInterface
      */
     public function register(Request $request): void
     {
-        $user = $this->userRepository->addUser($request->name, $request->email, $request->password);
+        $user = $this->userRepository->addUser(
+            $request->name,
+            $request->email,
+            $request->password
+        );
         if (! $user) {
-            throw ValidationException::withMessages(['user' => 'error creating user'])->status(406);
+            throw ValidationException::withMessages([
+                'user' => 'error creating user',
+            ])->status(406);
         }
 
         $this->loginUsingUser($user);
@@ -48,8 +54,9 @@ class AuthService implements AuthServiceInterface
         $request->session()->regenerate();
     }
 
-    public function loginUsingGoogle(\Laravel\Socialite\Contracts\User $googleUser): void
-    {
+    public function loginUsingGoogle(
+        \Laravel\Socialite\Contracts\User $googleUser
+    ): void {
         // find user by email (email is unique to db)
         $user = $this->userRepository->findUserByEmail($googleUser->getEmail());
         if ($user) {
@@ -57,7 +64,13 @@ class AuthService implements AuthServiceInterface
 
             return;
         }
-        $this->loginUsingUser($this->userRepository->addUser($googleUser->getName(), $googleUser->getEmail(), $googleUser->getId()));
+        $this->loginUsingUser(
+            $this->userRepository->addUser(
+                $googleUser->getName(),
+                $googleUser->getEmail(),
+                $googleUser->getId()
+            )
+        );
     }
 
     /**

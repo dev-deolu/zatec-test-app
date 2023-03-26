@@ -17,9 +17,6 @@ class AlbumController extends Controller
 
     /**
      * Create a new album controller instance.
-     *
-     * @param  AlbumServiceInterface  $artistService
-     * @return void
      */
     public function __construct(private AlbumServiceInterface $albumService)
     {
