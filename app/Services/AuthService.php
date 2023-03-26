@@ -13,9 +13,7 @@ use Illuminate\Validation\ValidationException;
 class AuthService implements AuthServiceInterface
 {
     /**
-     * Create a new signup controller instance.
-     *
-     * @return void
+     * Create a new Auth Service instance.
      */
     public function __construct(private UserRepositoryInterface $userRepository)
     {
@@ -23,8 +21,6 @@ class AuthService implements AuthServiceInterface
 
     /**
      * Register a user
-     *
-     * @throws ValidationException
      */
     public function register(Request $request): void
     {
@@ -44,8 +40,6 @@ class AuthService implements AuthServiceInterface
 
     /**
      * Login a user
-     *
-     * @throws ValidationException
      */
     public function login(LoginRequest $request): void
     {
@@ -54,6 +48,9 @@ class AuthService implements AuthServiceInterface
         $request->session()->regenerate();
     }
 
+    /**
+     * Login using Google
+     */
     public function loginUsingGoogle(
         \Laravel\Socialite\Contracts\User $googleUser
     ): void {
@@ -87,8 +84,6 @@ class AuthService implements AuthServiceInterface
 
     /**
      * Login using Authenticatable User
-     *
-     * @param Authenticatable User
      */
     private function loginUsingUser(Authenticatable $user): void
     {

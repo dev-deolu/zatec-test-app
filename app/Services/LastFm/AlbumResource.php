@@ -7,6 +7,9 @@ use Illuminate\Http\Client\Response;
 
 class AlbumResource
 {
+    /**
+     * Create a new Album Resource instance.
+     */
     public function __construct(private readonly LastFmService $service)
     {
     }

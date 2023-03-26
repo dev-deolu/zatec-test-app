@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Http;
 
 class LastFmService
 {
+    /**
+     * Create a new LastFm Service instance.
+     */
     public function __construct(
         private readonly string $baseUrl,
         public readonly string $api_key
@@ -37,8 +40,6 @@ class LastFmService
 
     /**
      * Issue a POST request to the given URL.
-     *
-     * @param  array  $data
      */
     public function post(string $url, array $payload = []): Response
     {

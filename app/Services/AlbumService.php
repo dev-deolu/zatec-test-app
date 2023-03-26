@@ -12,8 +12,10 @@ class AlbumService implements AlbumServiceInterface
     /**
      * Create a new Album Service instance.
      */
-    public function __construct(private AlbumRepositoryInterface $albumRepository, private LastFmService $api)
-    {
+    public function __construct(
+        private AlbumRepositoryInterface $albumRepository,
+        private LastFmService $api
+    ) {
     }
 
     /**
