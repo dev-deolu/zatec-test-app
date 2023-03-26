@@ -11,10 +11,6 @@ class AlbumService implements AlbumServiceInterface
 {
     /**
      * Create a new Album Service instance.
-     *
-     * @param  private AlbumRepositoryInterface $albumRepository
-     * @param  private LastFmService $api
-     * @return void
      */
     public function __construct(private AlbumRepositoryInterface $albumRepository, private LastFmService $api)
     {
@@ -35,6 +31,21 @@ class AlbumService implements AlbumServiceInterface
     }
 
     /**
+     * Get Album and Favorites with Search
+     */
+    public function getAlbumAndFavoriteWithSearch(User $user, string $search = null): array
+    {
+        $favorites = $this->getFavoriteAlbums($user);
+        if (! empty($search)) {
+            $albums = $this->api->album()->search($search);
+        } else {
+            $albums = $favorites ?: $this->api->album()->search(fake()->realText(10), 15);
+        }
+
+        return [$albums, $favorites];
+    }
+
+    /**
      * Get Favorite Albums
      */
     public function getFavoriteAlbums(User $user): ?array
@@ -44,22 +55,6 @@ class AlbumService implements AlbumServiceInterface
         return $user->albums->transform(function ($album) {
             return $album->album;
         })->toArray();
-    }
-
-    /**
-     * Get Album and Favorites with Search
-     */
-    public function getAlbumAndFavoriteWithSearch(User $user, string $search = null): array
-    {
-        $albums = null;
-        $favorites = $this->getFavoriteAlbums($user);
-        if (! empty($search)) {
-            $albums = $this->api->album()->search($search);
-        } else {
-            $albums = $favorites ?: $this->api->album()->search(fake()->realText(10), 15);
-        }
-
-        return [$albums, $favorites];
     }
 
     /**

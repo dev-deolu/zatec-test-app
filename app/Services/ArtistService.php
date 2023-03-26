@@ -11,10 +11,6 @@ class ArtistService implements ArtistServiceInterface
 {
     /**
      * Create a new Artist Service instance.
-     *
-     * @param  private ArtistRepositoryInterface $artistRepository
-     * @param  private LastFmService $api
-     * @return void
      */
     public function __construct(private ArtistRepositoryInterface $artistRepository, private LastFmService $api)
     {
@@ -35,6 +31,21 @@ class ArtistService implements ArtistServiceInterface
     }
 
     /**
+     * Get Artist and Favorites with Search
+     */
+    public function getArtistAndFavoriteWithSearch(User $user, string $search = null): array
+    {
+        $favorites = $this->getFavoriteArtists($user);
+        if (! empty($search)) {
+            $artists = $this->api->artist()->search($search);
+        } else {
+            $artists = $favorites ?: $this->api->artist()->search(fake()->realText(10), 15);
+        }
+
+        return [$artists, $favorites];
+    }
+
+    /**
      * Get Favorite Artist
      */
     public function getFavoriteArtists(User $user): ?array
@@ -44,22 +55,6 @@ class ArtistService implements ArtistServiceInterface
         return $user->artists->transform(function ($artist) {
             return $artist->artist;
         })->toArray();
-    }
-
-    /**
-     * Get Artist and Favorites with Search
-     */
-    public function getArtistAndFavoriteWithSearch(User $user, string $search = null): array
-    {
-        $artists = [];
-        $favorites = $this->getFavoriteArtists($user);
-        if (! empty($search)) {
-            $artists = $this->api->artist()->search($search);
-        } else {
-            $artists = $favorites ?: $this->api->artist()->search(fake()->realText(10), 15);
-        }
-
-        return [$artists, $favorites];
     }
 
     /**
@@ -81,14 +76,18 @@ class ArtistService implements ArtistServiceInterface
             // store record of album to add to favorite
             return $artist->artist;
         }
-        throw ValidationException::withMessages(['artist' => 'error storing favorite artist'])->status(406);
+        throw ValidationException::withMessages([
+            'artist' => 'error storing favorite artist',
+        ])->status(406);
     }
 
     /**
      * Remove favorite artist
      */
-    public function removeFavoriteArtist(User $user, string $artistId): bool
-    {
+    public function removeFavoriteArtist(
+        User $user,
+        string $artistId
+    ): bool {
         return $this->artistRepository->removeFavoriteArtist($user->id, $artistId);
     }
 }

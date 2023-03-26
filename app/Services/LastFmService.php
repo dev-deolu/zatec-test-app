@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Http;
 
 class LastFmService
 {
-    public function __construct(private readonly string $baseUrl, public readonly string $api_key)
-    {
+    public function __construct(
+        private readonly string $baseUrl,
+        public readonly string $api_key
+    ) {
     }
 
     /**
@@ -42,7 +44,7 @@ class LastFmService
     {
         return $this->buildBaseUrl()->post(
             url: $url,
-            data:  $payload
+            data: $payload
         );
     }
 
