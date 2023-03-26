@@ -53,12 +53,11 @@ class AlbumService implements AlbumServiceInterface
     {
         $albums = null;
         $favorites = $this->getFavoriteAlbums($user);
-
-        $this->whenFilled($search, function ($search) use (&$albums) {
+        if (! empty($search)) {
             $albums = $this->api->album()->search($search);
-        }, function () use (&$albums, $favorites) {
+        } else {
             $albums = $favorites ?: $this->api->album()->search(fake()->realText(10), 15);
-        });
+        }
 
         return [$albums, $favorites];
     }
@@ -93,24 +92,5 @@ class AlbumService implements AlbumServiceInterface
     public function removeFavoriteAlbum(User $user, string $albumId, string $artistId): bool
     {
         return $this->albumRepository->removeFavoriteAlbum($user->id, $albumId, $artistId);
-    }
-
-    /**
-     * Apply the callback if variable contains a non-empty value for the given variable.
-     *
-     * @param  string|null  $search
-     * @return $this|mixed
-     */
-    private function whenFilled($search, callable $callback, callable $default = null)
-    {
-        if (! empty($search)) {
-            return $callback($search) ?: $this;
-        }
-
-        if ($default) {
-            return $default();
-        }
-
-        return $this;
     }
 }
